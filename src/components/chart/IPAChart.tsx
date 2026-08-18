@@ -13,7 +13,7 @@ interface IPAChartProps {
 
 export const IPAChart: React.FC<IPAChartProps> = ({ settings, onSelectSymbol }) => {
   const t = getTranslation(settings.language);
-  const [activeTab, setActiveTab] = useState<'pulmonic' | 'vowels' | 'non-pulmonic' | 'diacritics'>('pulmonic');
+  const [activeTab, setActiveTab] = useState<'pulmonic' | 'affricates' | 'vowels' | 'non-pulmonic' | 'diacritics'>('pulmonic');
   const [viewMode, setViewMode] = useState<'grid' | 'cards'>('grid');
 
   const places: PlaceOfArticulation[] = [
@@ -33,6 +33,7 @@ export const IPAChart: React.FC<IPAChartProps> = ({ settings, onSelectSymbol }) 
     );
   };
 
+  const affricateSymbols = IPA_SYMBOLS.filter((s) => s.mannerOfArticulation === 'affricate');
   const nonPulmonicSymbols = IPA_SYMBOLS.filter((s) => s.category === 'non-pulmonic');
   const diacriticSymbols = IPA_SYMBOLS.filter((s) => s.category === 'diacritics' || s.category === 'suprasegmentals');
 
@@ -42,6 +43,7 @@ export const IPAChart: React.FC<IPAChartProps> = ({ settings, onSelectSymbol }) 
       <div className="flex border-b border-slate-200 dark:border-slate-800 space-x-1 overflow-x-auto no-scrollbar py-1">
         {[
           { id: 'pulmonic', label: t.chart.pulmonic },
+          { id: 'affricates', label: 'Affricates (破擦音)' },
           { id: 'vowels', label: t.chart.vowels },
           { id: 'non-pulmonic', label: t.chart.nonPulmonic },
           { id: 'diacritics', label: t.chart.diacritics },
@@ -187,6 +189,42 @@ export const IPAChart: React.FC<IPAChartProps> = ({ settings, onSelectSymbol }) 
             </div>
           )}
         </>
+      )}
+
+      {/* TAB CONTENT: AFFRICATES */}
+      {activeTab === 'affricates' && (
+        <div className="grid grid-cols-1 gap-2.5">
+          {affricateSymbols.map((sym) => (
+            <div
+              key={sym.id}
+              onClick={() => onSelectSymbol(sym)}
+              className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:border-indigo-500 transition-all shadow-xs"
+            >
+              <div className="flex items-center space-x-3.5">
+                <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center font-serif text-2xl font-bold text-indigo-600 dark:text-indigo-400 shrink-0">
+                  {sym.symbol}
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100">
+                    {sym.nameEnglish}
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                    {sym.description[settings.language]}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  audioService.playSymbolAudio(sym, { speed: settings.playbackSpeed, volume: settings.audioVolume });
+                }}
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-600 hover:text-white transition-all shrink-0 ml-2"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
       )}
 
       {/* TAB CONTENT: VOWELS */}

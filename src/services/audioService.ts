@@ -5,7 +5,7 @@ class AudioService {
 
   /**
    * Play audio for a given symbol or audio URL.
-   * Uses external audio files when available, falling back gracefully to Web Speech / Oscillator synthesis.
+   * Tries local downloaded audio first if available, then remote URL, then fallback speech synthesis.
    */
   public async playSymbolAudio(
     symbol: IPASymbol,
@@ -16,13 +16,23 @@ class AudioService {
     // Stop currently playing audio
     this.stop();
 
+    // Try remote audio source first if available
     if (symbol.audioSource && symbol.audioSource.startsWith('http')) {
       try {
         await this.playAudioUrl(symbol.audioSource, speed, volume);
         return;
       } catch (err) {
-        console.warn(`Failed to play external audio source for ${symbol.symbol}, trying fallback synthesis.`, err);
+        console.warn(`Remote audio source failed for ${symbol.symbol}, trying local audio or fallback synthesis.`, err);
       }
+    }
+
+    // Try local audio file
+    const localAudioUrl = `/audio/${symbol.id}.mp3`;
+    try {
+      await this.playAudioUrl(localAudioUrl, speed, volume);
+      return;
+    } catch {
+      // Local audio unavailable
     }
 
     // Fallback: Web Speech API or Web Audio Synth
@@ -30,7 +40,7 @@ class AudioService {
   }
 
   /**
-   * Play audio directly from a URL.
+   * Play audio directly from a URL or path.
    */
   public playAudioUrl(url: string, speed = 1.0, volume = 1.0): Promise<void> {
     return new Promise((resolve, reject) => {

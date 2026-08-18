@@ -1,5 +1,6 @@
 import type { UserProgress, UserSymbolProgress } from '../types/ipa';
 import { storageService } from './storageService';
+import { IPA_SYMBOLS } from '../data/ipaSymbols';
 
 export type SRSRating = 'again' | 'hard' | 'good' | 'easy';
 
@@ -67,10 +68,11 @@ class SRSEngine {
       newStreak += 1;
     }
 
-    // Calculate total mastery percentage
+    // Calculate total mastery percentage dynamically based on IPA_SYMBOLS.length
     const allKnown = Object.values(updatedSymbols);
     const masteredCount = allKnown.filter((s) => s.intervalDays >= 7 && s.timesCorrect >= 3).length;
-    const overallMastery = Math.min(100, Math.round((masteredCount / 46) * 100));
+    const totalCount = IPA_SYMBOLS.length || 1;
+    const overallMastery = Math.min(100, Math.round((masteredCount / totalCount) * 100));
 
     const updatedProgress: UserProgress = {
       ...currentProgress,
