@@ -1,6 +1,6 @@
 import type { UserProgress, UserSettings } from '../../types/ipa';
 import React from 'react';
-import { Award, Flame } from 'lucide-react';
+import { Award, Flame, Star, Zap, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { IPA_SYMBOLS } from '../../data/ipaSymbols';
 import { getTranslation } from '../../i18n';
 
@@ -31,6 +31,44 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, settings }
     }).length;
     return Math.round((count / total) * 100);
   };
+
+  const achievements = [
+    {
+      id: 'first_step',
+      title: 'First Phonetic Step',
+      desc: 'Studied your first IPA symbol',
+      icon: Zap,
+      unlocked: knownSymbolsCount >= 1,
+    },
+    {
+      id: 'streak_3',
+      title: '3-Day Streak Legend',
+      desc: 'Maintained a 3-day learning streak',
+      icon: Flame,
+      unlocked: progress.streakCount >= 3,
+    },
+    {
+      id: 'master_10',
+      title: 'IPA Apprentice',
+      desc: 'Mastered 10 phonemes',
+      icon: Star,
+      unlocked: masteredSymbolsCount >= 10,
+    },
+    {
+      id: 'vowel_expert',
+      title: 'Vowel Quadrilateral Specialist',
+      desc: 'Reached 50% mastery on vowels',
+      icon: CheckCircle2,
+      unlocked: getCategoryMastery(vowels) >= 50,
+    },
+    {
+      id: 'full_mastery',
+      title: 'Linguistics Master',
+      desc: 'Reached 80%+ total IPA mastery',
+      icon: ShieldCheck,
+      unlocked: progress.overallMastery >= 80,
+    },
+  ];
 
   return (
     <div className="space-y-4">
@@ -103,6 +141,42 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, settings }
             <span className="block text-base font-bold text-slate-900 dark:text-slate-100">{progress.longestStreak} days</span>
             <span className="text-xs text-slate-400">Best Streak</span>
           </div>
+        </div>
+      </div>
+
+      {/* Achievements Showcase */}
+      <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+        <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100 border-b border-slate-100 dark:border-slate-800 pb-2 flex items-center space-x-2">
+          <Award className="w-4 h-4 text-amber-500" />
+          <span>Achievements & Badges</span>
+        </h3>
+
+        <div className="space-y-2">
+          {achievements.map((ach) => {
+            const Icon = ach.icon;
+            return (
+              <div
+                key={ach.id}
+                className={`p-3 rounded-2xl border flex items-center space-x-3 transition-all ${
+                  ach.unlocked
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-950 dark:text-amber-100'
+                    : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200/60 dark:border-slate-800 opacity-50'
+                }`}
+              >
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                    ach.unlocked ? 'bg-amber-500 text-white shadow-xs' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-xs">{ach.title}</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">{ach.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

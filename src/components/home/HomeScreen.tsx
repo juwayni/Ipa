@@ -5,6 +5,7 @@ import { IPA_SYMBOLS } from '../../data/ipaSymbols';
 import { CURRICULUM_LEVELS } from '../../data/curriculum';
 import { getTranslation } from '../../i18n';
 import { audioService } from '../../services/audioService';
+import { AdBanner } from '../common/AdBanner';
 
 interface HomeScreenProps {
   progress: UserProgress;
@@ -71,6 +72,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Monetization Ad Banner */}
+      <AdBanner />
 
       {/* Quick Action Grid */}
       <div className="grid grid-cols-2 gap-3">
