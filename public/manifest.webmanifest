@@ -1,1 +1,10 @@
-{"name":"IPA Learner","short_name":"IPA","description":"Mobile-first IPA learning app with charts, practice, flashcards, and local progress.","start_url":"/","display":"standalone","background_color":"#f7f4ec","theme_color":"#256b5f","icons":[]}
+{
+  "name": "IPA Learner",
+  "short_name": "IPA Learner",
+  "description": "Mobile-first International Phonetic Alphabet learning app.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ec",
+  "theme_color": "#256b5f",
+  "icons": []
+}

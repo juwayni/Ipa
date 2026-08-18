@@ -1,2 +1,0 @@
-import {ipaEntries} from '../data/ipa';
-export function searchIPA(q:string){const n=q.trim().toLowerCase().replace('sh','ʃ').replace('zh','ʒ').replace('ng','ŋ'); if(!n)return ipaEntries.slice(0,30); return ipaEntries.map(e=>({e,hay:[e.symbol,e.unicode,e.names.en.name,e.names.ja.name,e.names.hu.name,e.description,e.placeOfArticulation,e.mannerOfArticulation,e.voicing,e.vowelHeight,e.vowelBackness,...e.searchAliases,...e.exampleWords.flatMap(w=>[w.word,w.language,w.ipa])].filter(Boolean).join(' ').toLowerCase()})).filter(x=>x.hay.includes(n)||x.e.symbol===q).map(x=>x.e)}

@@ -1,0 +1,10 @@
+import { mkdir, cp, readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+await mkdir('dist', { recursive: true });
+await cp('src', 'dist/src', { recursive: true });
+await cp('public', 'dist/public', { recursive: true });
+let html = await readFile('index.html', 'utf8');
+html = html.replace('href="/src/styles.css"', 'href="/src/styles.css"').replace('src="/src/app.js"', 'src="/src/app.js"');
+await writeFile('dist/index.html', html);
+if (!existsSync('dist/src/app.js')) throw new Error('build copy failed');
+console.log('Built static app into dist/.');
