@@ -1,1515 +1,435 @@
-import type { IPASymbol } from '../types/ipa';
+import type { IPASymbol, PlaceOfArticulation, MannerOfArticulation, Voicing, VowelHeight, VowelBackness, Roundness } from '../types/ipa';
 
-export const IPA_SYMBOLS: IPASymbol[] = [
-  // ==========================================
-  // PULMONIC CONSONANTS: PLOSIVES
-  // ==========================================
-  {
-    id: 'p',
-    symbol: 'p',
-    unicode: 'U+0070',
-    nameEnglish: 'Voiceless bilabial plosive',
-    nameJapanese: '無声両唇破裂音',
-    nameHungarian: 'Zöngétlen bilabiális okkluzíva',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'bilabial',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A voiceless bilabial plosive sound produced by blocking airflow with both lips and releasing it.',
-      ja: '両唇を閉じて息を止め、それを開放することによって発声される無声破裂音。',
-      hu: 'Zöngétlen bilabiális zárhang, amelyet a két ajak összezárásával és hirtelen felnyitásával képezünk.'
-    },
-    articulatoryGuide: {
-      en: 'Press both lips together firmly to stop airflow from the lungs, then open them briskly without vibrating your vocal cords.',
-      ja: '両唇をしっかり閉じ、声帯を振動させずに息を止めてから、一気に唇を開きます。',
-      hu: 'Szorítsd össze a két ajkadat, majd a hangszalagok rezgetése nélkül hirtelen engedd ki a levegőt.'
-    },
-    exampleWords: [
-      { word: 'pen', language: 'English', languageCode: 'en', transcription: '/pɛn/', meaning: 'Writing instrument', targetSoundIndex: 0 },
-      { word: 'パン', language: 'Japanese', languageCode: 'ja', transcription: '/paɴ/', meaning: 'Bread', targetSoundIndex: 0 },
-      { word: 'apa', language: 'Hungarian', languageCode: 'hu', transcription: '/ɒpɒ/', meaning: 'Father', targetSoundIndex: 1 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/5/51/Voiceless_bilabial_plosive.ogg/Voiceless_bilabial_plosive.ogg.mp3',
-    relatedSymbols: ['b', 'm', 'p\''],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 1,
-    isCore: true
-  },
-  {
-    id: 'b',
-    symbol: 'b',
-    unicode: 'U+0062',
-    nameEnglish: 'Voiced bilabial plosive',
-    nameJapanese: '有声両唇破裂音',
-    nameHungarian: 'Zöngés bilabiális okkluzíva',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'bilabial',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A voiced bilabial plosive produced by stopping airflow with both lips while vibrating vocal cords.',
-      ja: '声帯を振動させながら両唇で息を止め、急に開放する音。',
-      hu: 'Zöngés bilabiális zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Close both lips, build up air pressure while vibrating your vocal cords, and release.',
-      ja: '両唇を閉じ、声帯を震わせながら息を蓄え、一気に放ちます。',
-      hu: 'Zárd össze az ajkaidat, rezgesd a hangszalagjaidat, majd engedd ki a levegőt.'
-    },
-    exampleWords: [
-      { word: 'bad', language: 'English', languageCode: 'en', transcription: '/bæd/', meaning: 'Not good', targetSoundIndex: 0 },
-      { word: '豚', language: 'Japanese', languageCode: 'ja', transcription: '/buta/', meaning: 'Pig', targetSoundIndex: 0 },
-      { word: 'bab', language: 'Hungarian', languageCode: 'hu', transcription: '/bɒb/', meaning: 'Bean', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2c/Voiced_bilabial_plosive.ogg/Voiced_bilabial_plosive.ogg.mp3',
-    relatedSymbols: ['p', 'm', 'ɓ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 2,
-    isCore: true
-  },
-  {
-    id: 't',
-    symbol: 't',
-    unicode: 'U+0074',
-    nameEnglish: 'Voiceless alveolar plosive',
-    nameJapanese: '無声歯茎破裂音',
-    nameHungarian: 'Zöngétlen alveoláris okkluzíva',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A voiceless plosive produced with the tongue tip against the alveolar ridge.',
-      ja: '舌尖を歯茎にくっつけて息を止め、離すことで発声される無声破裂音。',
-      hu: 'Zöngétlen fogmedri zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Touch the tip of your tongue to the ridge behind your upper teeth, build pressure, and release without voice.',
-      ja: '舌先を上の歯茎につけ、息を止めてから一気に離します。声帯は震わせません。',
-      hu: 'Érintsd a nyelved hegyét a felső fogmederhez, majd engedd ki a levegőt zöngétlenül.'
-    },
-    exampleWords: [
-      { word: 'top', language: 'English', languageCode: 'en', transcription: '/tɒp/', meaning: 'Highest point', targetSoundIndex: 0 },
-      { word: '鳥', language: 'Japanese', languageCode: 'ja', transcription: '/tori/', meaning: 'Bird', targetSoundIndex: 0 },
-      { word: 'tó', language: 'Hungarian', languageCode: 'hu', transcription: '/toː/', meaning: 'Lake', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/02/Voiceless_alveolar_plosive.ogg/Voiceless_alveolar_plosive.ogg.mp3',
-    relatedSymbols: ['d', 'n', 'ʈ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 3,
-    isCore: true
-  },
-  {
-    id: 'd',
-    symbol: 'd',
-    unicode: 'U+0064',
-    nameEnglish: 'Voiced alveolar plosive',
-    nameJapanese: '有声歯茎破裂音',
-    nameHungarian: 'Zöngés alveoláris okkluzíva',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A voiced plosive made with the tongue tip against the alveolar ridge.',
-      ja: '声帯を振動させながら、舌尖を歯茎にくっつけて一気に離す音。',
-      hu: 'Zöngés fogmedri zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Place tongue tip against upper alveolar ridge, vibrate vocal cords, and release the block.',
-      ja: '舌先を上の歯茎につけ、声帯を振るわせながら開放します。',
-      hu: 'Helyezd a nyelvhegyet a felső fogmederhez, rezgesd a hangszalagokat és engedd el.'
-    },
-    exampleWords: [
-      { word: 'dog', language: 'English', languageCode: 'en', transcription: '/dɒɡ/', meaning: 'Canine animal', targetSoundIndex: 0 },
-      { word: 'ドア', language: 'Japanese', languageCode: 'ja', transcription: '/doa/', meaning: 'Door', targetSoundIndex: 0 },
-      { word: 'dió', language: 'Hungarian', languageCode: 'hu', transcription: '/dioː/', meaning: 'Walnut', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/Voiced_alveolar_plosive.ogg/Voiced_alveolar_plosive.ogg.mp3',
-    relatedSymbols: ['t', 'n', 'ɖ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 4,
-    isCore: true
-  },
-  {
-    id: 'k',
-    symbol: 'k',
-    unicode: 'U+006B',
-    nameEnglish: 'Voiceless velar plosive',
-    nameJapanese: '無声軟口蓋破裂音',
-    nameHungarian: 'Zöngétlen veláris okkluzíva',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'velar',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A voiceless plosive produced with the back of the tongue against the soft palate.',
-      ja: '舌の奥を軟口蓋に押し当てて息を止め、急に開放する無声破裂音。',
-      hu: 'Zöngétlen ínyvitorlai zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Raise the back of your tongue to touch your soft palate, block air, then pop it open without voice.',
-      ja: '舌の奥を軟口蓋につけて息を止め、破裂させるように離します。',
-      hu: 'Emeld fel a nyelved hátulját a lágy szájpadláshoz, állítsd meg a levegőt, majd pattintsd ki.'
-    },
-    exampleWords: [
-      { word: 'cat', language: 'English', languageCode: 'en', transcription: '/kæt/', meaning: 'Feline animal', targetSoundIndex: 0 },
-      { word: '傘', language: 'Japanese', languageCode: 'ja', transcription: '/kasa/', meaning: 'Umbrella', targetSoundIndex: 0 },
-      { word: 'kék', language: 'Hungarian', languageCode: 'hu', transcription: '/keːk/', meaning: 'Blue', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e3/Voiceless_velar_plosive.ogg/Voiceless_velar_plosive.ogg.mp3',
-    relatedSymbols: ['g', 'ŋ', 'c'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 5,
-    isCore: true
-  },
-  {
-    id: 'g',
-    symbol: 'ɡ',
-    unicode: 'U+0261',
-    nameEnglish: 'Voiced velar plosive',
-    nameJapanese: '有声軟口蓋破裂音',
-    nameHungarian: 'Zöngés veláris okkluzíva',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'velar',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A voiced plosive produced with the back of the tongue against the soft palate.',
-      ja: '声帯を振動させ、舌の奥を軟口蓋に当てて開放する有声破裂音。',
-      hu: 'Zöngés ínyvitorlai zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Touch the back of your tongue to your soft palate while humming/vibrating vocal cords, then release.',
-      ja: '声帯を震わせながら舌奥を軟口蓋に押し当て、急に離します。',
-      hu: 'Érintsd a nyelv hátsó részét a lágy szájpadláshoz, rezgesd a hangszalagokat, majd engedd el.'
-    },
-    exampleWords: [
-      { word: 'go', language: 'English', languageCode: 'en', transcription: '/ɡoʊ/', meaning: 'Move forward', targetSoundIndex: 0 },
-      { word: '外国', language: 'Japanese', languageCode: 'ja', transcription: '/ɡaikoku/', meaning: 'Foreign country', targetSoundIndex: 0 },
-      { word: 'gomb', language: 'Hungarian', languageCode: 'hu', transcription: '/ɡomb/', meaning: 'Button', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/12/Voiced_velar_plosive_02.ogg/Voiced_velar_plosive_02.ogg.mp3',
-    relatedSymbols: ['k', 'ŋ', 'ɟ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 6,
-    isCore: true
-  },
-  {
-    id: 'glottal_stop',
-    symbol: 'ʔ',
-    unicode: 'U+0294',
-    nameEnglish: 'Glottal stop',
-    nameJapanese: '声門閉鎖音',
-    nameHungarian: 'Gégezárhang',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'glottal',
-    mannerOfArticulation: 'plosive',
-    description: {
-      en: 'A stop sound made by momentarily closing the vocal folds (glottis), as in "uh-oh".',
-      ja: '声帯（声門）をしっかり閉じて息を止め、急に開放する音。',
-      hu: 'A hangszalagok pillanatnyi zárásával képzett gégezárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Tighten your vocal cords to hold your breath inside your throat, then release sharply.',
-      ja: '喉奥をクッと締めて息を止め、ハッと解放します。',
-      hu: 'Zárd el a levegőt a torkodban, majd hirtelen engedd ki.'
-    },
-    exampleWords: [
-      { word: 'uh-oh', language: 'English', languageCode: 'en', transcription: '/ˈʌʔ.oʊ/', meaning: 'Exclamation of error', targetSoundIndex: 2 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4d/Glottal_stop.ogg/Glottal_stop.ogg.mp3',
-    relatedSymbols: ['h', 'k', 'p'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 7,
-    isCore: true
-  },
+const CONSONANT_CSV_DATA = [
+  ["Voiceless bilabial nasal","m̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Voiceless_Bilabial_Nasal.ogg/Voiceless_Bilabial_Nasal.ogg.mp3"],
+  ["Voiced bilabial nasal","m","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Bilabial_nasal.ogg/Bilabial_nasal.ogg.mp3"],
+  ["Voiceless labiodental nasal","ɱ̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/76/Voiceless_labiodental_nasal.ogg/Voiceless_labiodental_nasal.ogg.mp3"],
+  ["Voiced labiodental nasal","ɱ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/18/Labiodental_nasal.ogg/Labiodental_nasal.ogg.mp3"],
+  ["Voiced linguolabial nasal","n̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/82/Linguolabial_nasal.ogg/Linguolabial_nasal.ogg.mp3"],
+  ["Voiceless dental nasal","n̪̊",""],
+  ["Voiced dental nasal","n̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/eb/Voiced_Dental_Nasal.ogg/Voiced_Dental_Nasal.ogg.mp3"],
+  ["Voiceless alveolar nasal","n̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/82/Voiceless_Alveolar_Nasal.ogg/Voiceless_Alveolar_Nasal.ogg.mp3"],
+  ["Voiced alveolar nasal","n","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/29/Alveolar_nasal.ogg/Alveolar_nasal.ogg.mp3"],
+  ["Voiceless postalveolar nasal","n̠̊",""],
+  ["Voiced postalveolar nasal","n̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f3/Voiced_postalveolar_nasal.ogg/Voiced_postalveolar_nasal.ogg.mp3"],
+  ["Voiceless retroflex nasal","ɳ̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d0/Voiceless_retroflex_nasal.wav/Voiceless_retroflex_nasal.wav.mp3"],
+  ["Voiced retroflex nasal","ɳ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/af/Retroflex_nasal.ogg/Retroflex_nasal.ogg.mp3"],
+  ["Voiceless palatal nasal","ɲ̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Voiceless_palatal_nasal.ogg/Voiceless_palatal_nasal.ogg.mp3"],
+  ["Voiced palatal nasal","ɲ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/46/Palatal_nasal.ogg/Palatal_nasal.ogg.mp3"],
+  ["Voiceless velar nasal","ŋ̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c7/Voiceless_velar_nasal.wav/Voiceless_velar_nasal.wav.mp3"],
+  ["Voiced velar nasal","ŋ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/39/Velar_nasal.ogg/Velar_nasal.ogg.mp3"],
+  ["Voiceless uvular nasal","ɴ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f4/Voiceless_uvular_nasal.ogg/Voiceless_uvular_nasal.ogg.mp3"],
+  ["Voiced uvular nasal","ɴ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/3e/Uvular_nasal.ogg/Uvular_nasal.ogg.mp3"],
+  ["Voiceless bilabial plosive","p","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/51/Voiceless_bilabial_plosive.ogg/Voiceless_bilabial_plosive.ogg.mp3"],
+  ["Voiced bilabial plosive","b","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2c/Voiced_bilabial_plosive.ogg/Voiced_bilabial_plosive.ogg.mp3"],
+  ["Voiceless labiodental plosive","p̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1d/Voiceless_labiodental_plosive.ogg/Voiceless_labiodental_plosive.ogg.mp3"],
+  ["Voiced labiodental plosive","b̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6e/Voiced_labiodental_plosive.wav/Voiced_labiodental_plosive.wav.mp3"],
+  ["Voiceless linguolabial plosive","t̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0f/Voiceless_linguolabial_stop.ogg/Voiceless_linguolabial_stop.ogg.mp3"],
+  ["Voiced linguolabial plosive","d̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/95/Voiced_linguolabial_stop.ogg/Voiced_linguolabial_stop.ogg.mp3"],
+  ["Voiceless dental plosive","t̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/dc/Voiceless_dental_stop.ogg/Voiceless_dental_stop.ogg.mp3"],
+  ["Voiced dental plosive","d̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1c/Voiced_dental_stop.ogg/Voiced_dental_stop.ogg.mp3"],
+  ["Voiceless alveolar plosive","t","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/02/Voiceless_alveolar_plosive.ogg/Voiceless_alveolar_plosive.ogg.mp3"],
+  ["Voiced alveolar plosive","d","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/Voiced_alveolar_plosive.ogg/Voiced_alveolar_plosive.ogg.mp3"],
+  ["Voiceless retroflex plosive","ʈ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b0/Voiceless_retroflex_stop.oga/Voiceless_retroflex_stop.oga.mp3"],
+  ["Voiced retroflex plosive","ɖ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/27/Voiced_retroflex_stop.oga/Voiced_retroflex_stop.oga.mp3"],
+  ["Voiceless palatal plosive","c","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5d/Voiceless_palatal_plosive.ogg/Voiceless_palatal_plosive.ogg.mp3"],
+  ["Voiced palatal plosive","ɟ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1d/Voiced_palatal_plosive.ogg/Voiced_palatal_plosive.ogg.mp3"],
+  ["Voiceless velar plosive","k","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e3/Voiceless_velar_plosive.ogg/Voiceless_velar_plosive.ogg.mp3"],
+  ["Voiced velar plosive","ɡ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/12/Voiced_velar_plosive_02.ogg/Voiced_velar_plosive_02.ogg.mp3"],
+  ["Voiceless uvular plosive","q","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/19/Voiceless_uvular_plosive.ogg/Voiceless_uvular_plosive.ogg.mp3"],
+  ["Voiced uvular plosive","ɢ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b6/Voiced_uvular_stop.oga/Voiced_uvular_stop.oga.mp3"],
+  ["Epiglottal plosive","ʡ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b2/Epiglottal_stop.ogg/Epiglottal_stop.ogg.mp3"],
+  ["Glottal stop","ʔ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4d/Glottal_stop.ogg/Glottal_stop.ogg.mp3"],
+  ["Voiceless dental sibilant affricate","t̪s̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b5/Voiceless_dental_sibilant_affricate.oga/Voiceless_dental_sibilant_affricate.oga.mp3"],
+  ["Voiced dental sibilant affricate","d̪z̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/16/Voiced_dental_sibilant_affricate.oga/Voiced_dental_sibilant_affricate.oga.mp3"],
+  ["Voiceless alveolar affricate","ts","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9d/Voiceless_alveolar_sibilant_affricate.oga/Voiceless_alveolar_sibilant_affricate.oga.mp3"],
+  ["Voiced alveolar affricate","dz","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d8/Voiced_alveolar_sibilant_affricate.oga/Voiced_alveolar_sibilant_affricate.oga.mp3"],
+  ["Voiceless postalveolar affricate","t̠ʃ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/97/Voiceless_palato-alveolar_affricate.ogg/Voiceless_palato-alveolar_affricate.ogg.mp3"],
+  ["Voiced postalveolar affricate","d̠ʒ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e6/Voiced_palato-alveolar_affricate.ogg/Voiced_palato-alveolar_affricate.ogg.mp3"],
+  ["Voiceless retroflex affricate","tʂ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e9/Voiceless_retroflex_affricate.ogg/Voiceless_retroflex_affricate.ogg.mp3"],
+  ["Voiced retroflex affricate","dʐ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/58/Voiced_retroflex_affricate.ogg/Voiced_retroflex_affricate.ogg.mp3"],
+  ["Voiceless alveolo-palatal affricate","tɕ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c4/Voiceless_alveolo-palatal_affricate.ogg/Voiceless_alveolo-palatal_affricate.ogg.mp3"],
+  ["Voiced alveolo-palatal affricate","dʑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c1/Voiced_alveolo-palatal_affricate.ogg/Voiced_alveolo-palatal_affricate.ogg.mp3"],
+  ["Voiceless bilabial affricate","pɸ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4a/Voiceless_bilabial_affricate.ogg/Voiceless_bilabial_affricate.ogg.mp3"],
+  ["Voiced bilabial affricate","bβ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b4/Voiced_bilabial_affricate.wav/Voiced_bilabial_affricate.wav.mp3"],
+  ["Voiceless labiodental affricate","p̪f","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/83/Voiceless_labiodental_affricate.ogg/Voiceless_labiodental_affricate.ogg.mp3"],
+  ["Voiced labiodental affricate","b̪v","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/33/Voiced_labiodental_affricate.ogg/Voiced_labiodental_affricate.ogg.mp3"],
+  ["Voiceless dental affricate","t̪θ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/ba/Voiceless_dental_non-sibilant_affricate.oga/Voiceless_dental_non-sibilant_affricate.oga.mp3"],
+  ["Voiced dental affricate","d̪ð","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/27/Voiced_dental_non-sibilant_affricate.oga/Voiced_dental_non-sibilant_affricate.oga.mp3"],
+  ["Voiceless alveolar non-sibilant affricate","tɹ̝̊",""],
+  ["Voiced alveolar non-sibilant affricate","dɹ̝",""],
+  ["Voiceless postalveolar non-sibilant affricate","t̠ɹ̠̊˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f4/Voiceless_postalveolar_non-sibilant_affricate.ogg/Voiceless_postalveolar_non-sibilant_affricate.ogg.mp3"],
+  ["Voiced postalveolar non-sibilant affricate","d̠ɹ̠˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d7/Voiced_postalveolar_non-sibilant_affricate.ogg/Voiced_postalveolar_non-sibilant_affricate.ogg.mp3"],
+  ["Voiceless palatal affricate","cç","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fd/Voiceless_palatal_affricate.ogg/Voiceless_palatal_affricate.ogg.mp3"],
+  ["Voiced palatal affricate","ɟʝ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/aa/Voiced_palatal_affricate.ogg/Voiced_palatal_affricate.ogg.mp3"],
+  ["Voiceless velar affricate","kx","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e5/Voiceless_velar_affricate.ogg/Voiceless_velar_affricate.ogg.mp3"],
+  ["Voiced velar affricate","ɡɣ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Voiced_velar_affricate.ogg/Voiced_velar_affricate.ogg.mp3"],
+  ["Voiceless uvular affricate","qχ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/43/Voiceless_uvular_affricate.ogg/Voiceless_uvular_affricate.ogg.mp3"],
+  ["Voiced uvular affricate","ɢʁ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/35/Voiced_uvular_affricate.ogg/Voiced_uvular_affricate.ogg.mp3"],
+  ["Voiceless epiglottal affricate","ʡʜ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ea/Voiceless_epiglottal_affricate.ogg/Voiceless_epiglottal_affricate.ogg.mp3"],
+  ["Voiced epiglottal affricate","ʡʢ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e4/Voiced_epiglottal_affricate.ogg/Voiced_epiglottal_affricate.ogg.mp3"],
+  ["Voiceless glottal affricate","ʔh","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/44/Voiceless_glottal_affricate.ogg/Voiceless_glottal_affricate.ogg.mp3"],
+  ["Voiceless dental sibilant fricative","s̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Voiceless_dental_sibilant_fricative.ogg/Voiceless_dental_sibilant_fricative.ogg.mp3"],
+  ["Voiced dental sibilant fricative","z̪",""],
+  ["Voiceless alveolar fricative","s","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ac/Voiceless_alveolar_sibilant.ogg/Voiceless_alveolar_sibilant.ogg.mp3"],
+  ["Voiced alveolar fricative","z","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Voiced_alveolar_sibilant.ogg/Voiced_alveolar_sibilant.ogg.mp3"],
+  ["Voiceless postalveolar fricative","ʃ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cc/Voiceless_palato-alveolar_sibilant.ogg/Voiceless_palato-alveolar_sibilant.ogg.mp3"],
+  ["Voiced postalveolar fricative","ʒ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/30/Voiced_palato-alveolar_sibilant.ogg/Voiced_palato-alveolar_sibilant.ogg.mp3"],
+  ["Voiceless retroflex fricative","ʂ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b1/Voiceless_retroflex_sibilant.ogg/Voiceless_retroflex_sibilant.ogg.mp3"],
+  ["Voiced retroflex fricative","ʐ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7f/Voiced_retroflex_sibilant.ogg/Voiced_retroflex_sibilant.ogg.mp3"],
+  ["Voiceless alveolo-palatal fricative","ɕ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/Voiceless_alveolo-palatal_sibilant.ogg/Voiceless_alveolo-palatal_sibilant.ogg.mp3"],
+  ["Voiced alveolo-palatal fricative","ʑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/15/Voiced_alveolo-palatal_sibilant.ogg/Voiced_alveolo-palatal_sibilant.ogg.mp3"],
+  ["Voiceless bilabial fricative","ɸ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Voiceless_bilabial_fricative.ogg/Voiceless_bilabial_fricative.ogg.mp3"],
+  ["Voiced bilabial fricative","β","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/Voiced_bilabial_fricative.ogg/Voiced_bilabial_fricative.ogg.mp3"],
+  ["Voiceless labiodental fricative","f","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c7/Voiceless_labio-dental_fricative.ogg/Voiceless_labio-dental_fricative.ogg.mp3"],
+  ["Voiced labiodental fricative","v","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/42/Voiced_labio-dental_fricative.ogg/Voiced_labio-dental_fricative.ogg.mp3"],
+  ["Voiceless linguolabial fricative","θ̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Voiceless_linguolabial_fricative.ogg/Voiceless_linguolabial_fricative.ogg.mp3"],
+  ["Voiced linguolabial fricative","ð̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7e/Voiced_linguolabial_fricative.wav/Voiced_linguolabial_fricative.wav.mp3"],
+  ["Voiceless dental fricative","θ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/80/Voiceless_dental_fricative.ogg/Voiceless_dental_fricative.ogg.mp3"],
+  ["Voiced dental fricative","ð","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6a/Voiced_dental_fricative.ogg/Voiced_dental_fricative.ogg.mp3"],
+  ["Voiceless alveolar non-sibilant fricative","θ̠",""],
+  ["Voiced alveolar non-sibilant fricative","ð̠",""],
+  ["Voiceless postalveolar non-sibilant fricative","ɹ̠̊˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ab/Voiceless_postalveolar_non-sibilant_fricative.ogg/Voiceless_postalveolar_non-sibilant_fricative.ogg.mp3"],
+  ["Voiced postalveolar non-sibilant fricative","ɹ̠˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0a/Voiced_postalveolar_non-sibilant_fricative.ogg/Voiced_postalveolar_non-sibilant_fricative.ogg.mp3"],
+  ["Voiceless retroflex non-sibilant fricative","ɻ̊˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Voiceless_retroflex_non-sibilant_fricative.ogg/Voiceless_retroflex_non-sibilant_fricative.ogg.mp3"],
+  ["Voiced retroflex non-sibilant fricative","ɻ˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/59/Voiced_retroflex_non-sibilant_fricative.ogg/Voiced_retroflex_non-sibilant_fricative.ogg.mp3"],
+  ["Voiceless palatal fricative","ç","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ab/Voiceless_palatal_fricative.ogg/Voiceless_palatal_fricative.ogg.mp3"],
+  ["Voiced palatal fricative","ʝ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ac/Voiced_palatal_fricative.ogg/Voiced_palatal_fricative.ogg.mp3"],
+  ["Voiceless velar fricative","x","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0f/Voiceless_velar_fricative.ogg/Voiceless_velar_fricative.ogg.mp3"],
+  ["Voiced velar fricative","ɣ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/47/Voiced_velar_fricative.ogg/Voiced_velar_fricative.ogg.mp3"],
+  ["Voiceless uvular fricative","χ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c8/Voiceless_uvular_fricative.ogg/Voiceless_uvular_fricative.ogg.mp3"],
+  ["Voiced uvular fricative","ʁ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/af/Voiced_uvular_fricative.ogg/Voiced_uvular_fricative.ogg.mp3"],
+  ["Voiceless pharyngeal fricative","ħ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b2/Voiceless_pharyngeal_fricative.ogg/Voiceless_pharyngeal_fricative.ogg.mp3"],
+  ["Voiced pharyngeal fricative","ʕ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cd/Voiced_pharyngeal_fricative.ogg/Voiced_pharyngeal_fricative.ogg.mp3"],
+  ["Voiceless glottal fricative","h","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/da/Voiceless_glottal_fricative.ogg/Voiceless_glottal_fricative.ogg.mp3"],
+  ["Voiced glottal fricative","ɦ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e2/Voiced_glottal_fricative.ogg/Voiced_glottal_fricative.ogg.mp3"],
+  ["Voiced bilabial approximant","β̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/11/Bilabial_approximant.ogg/Bilabial_approximant.ogg.mp3"],
+  ["Voiced labiodental approximant","ʋ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ee/Labiodental_approximant.ogg/Labiodental_approximant.ogg.mp3"],
+  ["Voiced dental approximant","ð̞",""],
+  ["Voiced alveolar approximant","ɹ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1f/Alveolar_approximant.ogg/Alveolar_approximant.ogg.mp3"],
+  ["Voiced postalveolar approximant","ɹ̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/33/Postalveolar_approximant.ogg/Postalveolar_approximant.ogg.mp3"],
+  ["Voiced retroflex approximant","ɻ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bf/Retroflex_Approximant2.oga/Retroflex_Approximant2.oga.mp3"],
+  ["Voiced palatal approximant","j","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Palatal_approximant.ogg/Palatal_approximant.ogg.mp3"],
+  ["Voiced velar approximant","ɰ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5c/Voiced_velar_approximant.ogg/Voiced_velar_approximant.ogg.mp3"],
+  ["Creaky-voiced glottal approximant","˷","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/99/Creaky-voiced_glottal_approximant.wav/Creaky-voiced_glottal_approximant.wav.mp3"],
+  ["Voiced bilabial flap","ⱱ̟","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7c/Voiced_bilabial_flap.wav/Voiced_bilabial_flap.wav.mp3"],
+  ["Voiced labiodental flap","ⱱ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2c/Labiodental_flap.ogg/Labiodental_flap.ogg.mp3"],
+  ["Voiceless alveolar tap","ɾ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Voiceless_alveolar_tap.wav/Voiceless_alveolar_tap.wav.mp3"],
+  ["Voiced alveolar tap or flap","ɾ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Alveolar_tap.ogg/Alveolar_tap.ogg.mp3"],
+  ["Voiceless retroflex flap","ɽ̊",""],
+  ["Voiced retroflex flap","ɽ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/87/Retroflex_flap.ogg/Retroflex_flap.ogg.mp3"],
+  ["Voiced uvular tap and flap","ɢ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b7/Voiced_uvular_tap.wav/Voiced_uvular_tap.wav.mp3"],
+  ["Voiced epiglottal tap","ʡ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f1/Epiglottal_flap.oga/Epiglottal_flap.oga.mp3"],
+  ["Voiceless bilabial trill","ʙ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ec/Voiceless_bilabial_trill_with_aspiration.ogg/Voiceless_bilabial_trill_with_aspiration.ogg.mp3"],
+  ["Voiced bilabial trill","ʙ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e7/Bilabial_trill.ogg/Bilabial_trill.ogg.mp3"],
+  ["Voiceless alveolar trill","r̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1e/Voiceless_alveolar_trill.ogg/Voiceless_alveolar_trill.ogg.mp3"],
+  ["Voiced alveolar trill","r","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Alveolar_trill.ogg/Alveolar_trill.ogg.mp3"],
+  ["Voiced postalveolar trill","r̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ae/Voiced_postalveolar_trill.ogg/Voiced_postalveolar_trill.ogg.mp3"],
+  ["Voiceless retroflex trill","ɽ̊r̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/Voiceless_retroflex_trill.ogg/Voiceless_retroflex_trill.ogg.mp3"],
+  ["Voiced retroflex trill","ɽr","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/29/Voiced_retroflex_trill.ogg/Voiced_retroflex_trill.ogg.mp3"],
+  ["Voiceless uvular trill","ʀ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/8d/Voiceless_uvular_trill.ogg/Voiceless_uvular_trill.ogg.mp3"],
+  ["Voiced uvular trill","ʀ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Uvular_trill.ogg/Uvular_trill.ogg.mp3"],
+  ["Voiceless epiglottal trill","ʜ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7b/Voiceless_epiglottal_trill.ogg/Voiceless_epiglottal_trill.ogg.mp3"],
+  ["Voiced epiglottal trill","ʢ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/18/Voiced_epiglottal_trill_2.ogg/Voiced_epiglottal_trill_2.ogg.mp3"],
+  ["Voiceless alveolar lateral affricate","tɬ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Voiceless_alveolar_lateral_affricate.ogg/Voiceless_alveolar_lateral_affricate.ogg.mp3"],
+  ["Voiced alveolar lateral affricate","dɮ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/31/Voiced_alveolar_lateral_affricate.ogg/Voiced_alveolar_lateral_affricate.ogg.mp3"],
+  ["Voiceless retroflex lateral affricate","tꞎ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/db/Voiceless_retroflex_lateral_affricate.ogg/Voiceless_retroflex_lateral_affricate.ogg.mp3"],
+  ["Voiced retroflex lateral affricate","d𝼅","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c5/Voiced_retroflex_lateral_affricate.ogg/Voiced_retroflex_lateral_affricate.ogg.mp3"],
+  ["Voiceless palatal lateral affricate","c𝼆","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Voiceless_palatal_lateral_affricate.ogg/Voiceless_palatal_lateral_affricate.ogg.mp3"],
+  ["Voiced palatal lateral affricate","ɟʎ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e6/Voiced_palatal_lateral_affricate.ogg/Voiced_palatal_lateral_affricate.ogg.mp3"],
+  ["Voiceless velar lateral affricate","k𝼄","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/02/Voiceless_velar_lateral_affricate.ogg/Voiceless_velar_lateral_affricate.ogg.mp3"],
+  ["Voiced velar lateral affricate","ɡʟ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/93/Voiced_velar_lateral_affricate.ogg/Voiced_velar_lateral_affricate.ogg.mp3"],
+  ["Voiceless dental lateral fricative","ɬ̪",""],
+  ["Voiceless alveolar lateral fricative","ɬ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ea/Voiceless_alveolar_lateral_fricative.ogg/Voiceless_alveolar_lateral_fricative.ogg.mp3"],
+  ["Voiced alveolar lateral fricative","ɮ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6f/Voiced_alveolar_lateral_fricative.ogg/Voiced_alveolar_lateral_fricative.ogg.mp3"],
+  ["Voiceless retroflex lateral fricative","ꞎ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/54/Voiceless_retroflex_lateral_fricative.ogg/Voiceless_retroflex_lateral_fricative.ogg.mp3"],
+  ["Voiced retroflex lateral fricative","𝼅","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Voiced_retroflex_lateral_fricative.wav/Voiced_retroflex_lateral_fricative.wav.mp3"],
+  ["Voiceless palatal lateral fricative","𝼆","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fe/Voiceless_palatal_lateral_fricative.ogg/Voiceless_palatal_lateral_fricative.ogg.mp3"],
+  ["Voiced palatal lateral fricative","ʎ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/88/%CA%8E%CC%9D_IPA_sound.opus/%CA%8E%CC%9D_IPA_sound.opus.mp3"],
+  ["Voiceless velar lateral fricative","𝼄","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/99/Voiceless_velar_lateral_fricative.ogg/Voiceless_velar_lateral_fricative.ogg.mp3"],
+  ["Voiced velar lateral fricative","ʟ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/24/Voiced_velar_lateral_fricative.ogg/Voiced_velar_lateral_fricative.ogg.mp3"],
+  ["Voiced dental lateral approximant","l̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f8/Voiced_dental_lateral_approximant.ogg/Voiced_dental_lateral_approximant.ogg.mp3"],
+  ["Voiceless alveolar lateral approximant","l̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e1/Voiceless_alveolar_lateral_approximant.ogg/Voiceless_alveolar_lateral_approximant.ogg.mp3"],
+  ["Voiced alveolar lateral approximant","l","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Alveolar_lateral_approximant.ogg/Alveolar_lateral_approximant.ogg.mp3"],
+  ["Voiced postalveolar lateral approximant","l̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5b/Voiced_postalveolar_lateral_approximant.ogg/Voiced_postalveolar_lateral_approximant.ogg.mp3"],
+  ["Voiceless retroflex lateral approximant","ɭ̊",""],
+  ["Voiced retroflex lateral approximant","ɭ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d1/Retroflex_lateral_approximant.ogg/Retroflex_lateral_approximant.ogg.mp3"],
+  ["Voiceless palatal lateral approximant","ʎ̥",""],
+  ["Voiced palatal lateral approximant","ʎ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Palatal_lateral_approximant.ogg/Palatal_lateral_approximant.ogg.mp3"],
+  ["Voiceless velar lateral approximant","ʟ̥",""],
+  ["Voiced velar lateral approximant","ʟ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d3/Velar_lateral_approximant.ogg/Velar_lateral_approximant.ogg.mp3"],
+  ["Voiced uvular lateral approximant","ʟ̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/73/Uvular_lateral_approximant.ogg/Uvular_lateral_approximant.ogg.mp3"],
+  ["Voiceless alveolar lateral flap","ɺ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4d/Voiceless_alveolar_lateral_flap.wav/Voiceless_alveolar_lateral_flap.wav.mp3"],
+  ["Voiced alveolar lateral flap","ɺ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c9/Voiced_alveolar_lateral_flap.wav/Voiced_alveolar_lateral_flap.wav.mp3"],
+  ["Voiceless retroflex lateral flap","𝼈̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/55/Voiceless_retroflex_lateral_flap.wav/Voiceless_retroflex_lateral_flap.wav.mp3"],
+  ["Voiced retroflex lateral flap","𝼈","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/38/Voiced_retroflex_lateral_flap_%28correct%29.wav/Voiced_retroflex_lateral_flap_%28correct%29.wav.mp3"],
+  ["Voiced palatal lateral flap","ʎ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Voiced_palatal_lateral_flap.wav/Voiced_palatal_lateral_flap.wav.mp3"],
+  ["Voiced velar lateral tap","ʟ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5a/Voiced_velar_lateral_tap.wav/Voiced_velar_lateral_tap.wav.mp3"],
+  ["Voiceless labial–alveolar plosive","t͡p","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/Voiceless_labial-alveolar_plosive.ogg/Voiceless_labial-alveolar_plosive.ogg.mp3"],
+  ["Voiceless labial–velar plosive","k͡p","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5f/Voiceless_labial-velar_plosive.ogg/Voiceless_labial-velar_plosive.ogg.mp3"],
+  ["Voiced labial–velar plosive","ɡ͡b","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1f/Voiced_labial-velar_plosive.ogg/Voiced_labial-velar_plosive.ogg.mp3"],
+  ["Voiceless labial–uvular plosive","q͡p","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/94/Voiceless_labial%E2%80%93uvular_plosive.ogg/Voiceless_labial%E2%80%93uvular_plosive.ogg.mp3"],
+  ["Voiced labial–velar nasal","ŋ͡m","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/99/Labial-velar_nasal_stop.ogg/Labial-velar_nasal_stop.ogg.mp3"],
+  ["Voiceless labial–velar fricative","ʍ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/Voiceless_labio-velar_fricative.ogg/Voiceless_labio-velar_fricative.ogg.mp3"],
+  ["Voiced labial–velar approximant","w","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f2/Voiced_labio-velar_approximant.ogg/Voiced_labio-velar_approximant.ogg.mp3"],
+  ["Voiced labial–palatal approximant","ɥ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/32/LL-Q150_%28fra%29-WikiLucas00-IPA_%C9%A5.wav/LL-Q150_%28fra%29-WikiLucas00-IPA_%C9%A5.wav.mp3"],
+  ["Sj-sound","ɧ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/42/Voiceless_dorso-palatal_velar_fricative.ogg/Voiceless_dorso-palatal_velar_fricative.ogg.mp3"],
+  ["Velarized alveolar lateral approximant","ɫ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d3/Velarized_alveolar_lateral_approximant.ogg/Velarized_alveolar_lateral_approximant.ogg.mp3"],
+  ["Voiceless labial–velar implosive","ɠ̊͜ɓ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/36/Voiceless-labial%E2%80%93velar-implosive.ogg/Voiceless-labial%E2%80%93velar-implosive.ogg.mp3"],
+  ["Voiced labial–velar implosive","ɠ͡ɓ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/Voiced-labial-velar-implosive.ogg/Voiced-labial-velar-implosive.ogg.mp3"],
 
-  // ==========================================
-  // PULMONIC CONSONANTS: NASALS
-  // ==========================================
-  {
-    id: 'm',
-    symbol: 'm',
-    unicode: 'U+006D',
-    nameEnglish: 'Voiced bilabial nasal',
-    nameJapanese: '有声両唇鼻音',
-    nameHungarian: 'Zöngés bilabiális nazális',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'bilabial',
-    mannerOfArticulation: 'nasal',
-    description: {
-      en: 'A voiced nasal made with closed lips while air flows through the nose.',
-      ja: '両唇を閉じ、息を鼻に逃がしながら声帯を振動させる鼻音。',
-      hu: 'Zöngés bilabiális orrhang.'
-    },
-    articulatoryGuide: {
-      en: 'Close both lips, lower your velum so air exits through the nose, and hum with voice.',
-      ja: '両唇を閉じ、鼻から息を出しながら「ムー」と声を出します。',
-      hu: 'Zárd össze az ajkaidat, engedd le a lágy szájpadlást, hogy a levegő az orrodon át távozzon.'
-    },
-    exampleWords: [
-      { word: 'man', language: 'English', languageCode: 'en', transcription: '/mæn/', meaning: 'Adult male', targetSoundIndex: 0 },
-      { word: '水', language: 'Japanese', languageCode: 'ja', transcription: '/mizu/', meaning: 'Water', targetSoundIndex: 0 },
-      { word: 'már', language: 'Hungarian', languageCode: 'hu', transcription: '/maːr/', meaning: 'Already', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Bilabial_nasal.ogg/Bilabial_nasal.ogg.mp3',
-    relatedSymbols: ['p', 'b', 'ɱ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 8,
-    isCore: true
-  },
-  {
-    id: 'n',
-    symbol: 'n',
-    unicode: 'U+006E',
-    nameEnglish: 'Voiced alveolar nasal',
-    nameJapanese: '有声歯茎鼻音',
-    nameHungarian: 'Zöngés alveoláris nazális',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'nasal',
-    description: {
-      en: 'A voiced nasal produced with tongue against alveolar ridge while air escapes through the nose.',
-      ja: '舌先を歯茎につけ、鼻から息を通しながら声を出す有声鼻音。',
-      hu: 'Zöngés fogmedri orrhang.'
-    },
-    articulatoryGuide: {
-      en: 'Place tongue tip against alveolar ridge, lower velum to direct air through nose, and hum.',
-      ja: '舌先を上の歯茎につけ、口を閉じ気味にして鼻から声を出します。',
-      hu: 'Tedd a nyelvhegyedet a fogmederhez, és engedd a levegőt az orron át kiáramolni.'
-    },
-    exampleWords: [
-      { word: 'no', language: 'English', languageCode: 'en', transcription: '/noʊ/', meaning: 'Negation', targetSoundIndex: 0 },
-      { word: '猫', language: 'Japanese', languageCode: 'ja', transcription: '/neko/', meaning: 'Cat', targetSoundIndex: 0 },
-      { word: 'nap', language: 'Hungarian', languageCode: 'hu', transcription: '/nɒp/', meaning: 'Sun/Day', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/2/29/Alveolar_nasal.ogg/Alveolar_nasal.ogg.mp3',
-    relatedSymbols: ['m', 'ŋ', 'ɲ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 9,
-    isCore: true
-  },
-  {
-    id: 'ng',
-    symbol: 'ŋ',
-    unicode: 'U+014B',
-    nameEnglish: 'Voiced velar nasal',
-    nameJapanese: '有声軟口蓋鼻音',
-    nameHungarian: 'Zöngés veláris nazális',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'velar',
-    mannerOfArticulation: 'nasal',
-    description: {
-      en: 'A voiced nasal produced with the back of tongue against soft palate while air flows through nose.',
-      ja: '舌の奥を軟口蓋につけ、息を鼻から抜いて出す音（-ngの音）。',
-      hu: 'Zöngés veláris orrhang.'
-    },
-    articulatoryGuide: {
-      en: 'Place back of tongue against soft palate, lower velum to allow nasal airflow with voice.',
-      ja: '舌奥を軟口蓋につけたまま、息を鼻から抜いて「ンー」と鳴らします。',
-      hu: 'Tartsd a nyelv hátsó részét a lágy szájpadlásnál, engedd ki a levegőt az orron át.'
-    },
-    exampleWords: [
-      { word: 'sing', language: 'English', languageCode: 'en', transcription: '/sɪŋ/', meaning: 'Vocalize music', targetSoundIndex: 3 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/3/39/Velar_nasal.ogg/Velar_nasal.ogg.mp3',
-    relatedSymbols: ['n', 'ɲ', 'g'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 10,
-    isCore: true
-  },
-  {
-    id: 'ny',
-    symbol: 'ɲ',
-    unicode: 'U+0272',
-    nameEnglish: 'Voiced palatal nasal',
-    nameJapanese: '有声硬口蓋鼻音',
-    nameHungarian: 'Zöngés palatális nazális',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'palatal',
-    mannerOfArticulation: 'nasal',
-    description: {
-      en: 'A voiced palatal nasal produced with tongue blade pressed against hard palate.',
-      ja: '舌面を硬口蓋に広く押し当てて出す鼻音（ハンガリー語のny）。',
-      hu: 'Zöngés palatális orrhang (a magyar ny hang).'
-    },
-    articulatoryGuide: {
-      en: 'Press the flat middle body of your tongue against the roof of your mouth while producing a nasal tone.',
-      ja: '舌の表面を口の天井に広く押し当て、鼻から音を出します。',
-      hu: 'Nyomd a nyelvtestet a kemény szájpadláshoz, miközben a levegő az orrodon át távozik.'
-    },
-    exampleWords: [
-      { word: 'nyár', language: 'Hungarian', languageCode: 'hu', transcription: '/ɲaːr/', meaning: 'Summer', targetSoundIndex: 0 },
-      { word: 'señor', language: 'Spanish', languageCode: 'es', transcription: '/seˈɲor/', meaning: 'Sir/Mr.', targetSoundIndex: 2 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/4/46/Palatal_nasal.ogg/Palatal_nasal.ogg.mp3',
-    relatedSymbols: ['n', 'ŋ', 'j'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 11,
-    isCore: true
-  },
-
-  // ==========================================
-  // PULMONIC CONSONANTS: AFFRICATES
-  // ==========================================
-  {
-    id: 'affricate_ts',
-    symbol: 'ts',
-    unicode: 'U+0074 U+0073',
-    nameEnglish: 'Voiceless alveolar affricate',
-    nameJapanese: '無声歯茎破擦音',
-    nameHungarian: 'Zöngétlen alveoláris affrikáta (magyar c)',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'affricate',
-    description: {
-      en: 'A voiceless affricate starting with an alveolar stop /t/ and releasing into fricative /s/ (magyar "c").',
-      ja: '「t」の破裂から「s」の摩擦へ瞬時に移行する無声破擦音（日本語の「ツ」の頭音）。',
-      hu: 'A t zárhangból és s (sz) réshangból álló zöngétlen affrikáta (a magyar c).'
-    },
-    articulatoryGuide: {
-      en: 'Stop air at alveolar ridge with tongue tip, then release slightly to create a sharp "ts" friction.',
-      ja: '舌先を歯茎につけて息を止め、一瞬で狭い隙間を開けて「ツ」と吹きます。',
-      hu: 'Állítsd meg a levegőt a fogmedernél, majd engedd át keskeny résen a "c" hang képzéséhez.'
-    },
-    exampleWords: [
-      { word: 'cats', language: 'English', languageCode: 'en', transcription: '/kæts/', meaning: 'Plural cats', targetSoundIndex: 3 },
-      { word: 'cica', language: 'Hungarian', languageCode: 'hu', transcription: '/tsit͡sɒ/', meaning: 'Kitty', targetSoundIndex: 0 },
-      { word: '机', language: 'Japanese', languageCode: 'ja', transcription: '/tsɯkɯe/', meaning: 'Desk', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9d/Voiceless_alveolar_sibilant_affricate.oga/Voiceless_alveolar_sibilant_affricate.oga.mp3',
-    relatedSymbols: ['t', 's', 'dz'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 12,
-    isCore: true
-  },
-  {
-    id: 'affricate_dz',
-    symbol: 'dz',
-    unicode: 'U+0064 U+007A',
-    nameEnglish: 'Voiced alveolar affricate',
-    nameJapanese: '有声歯茎破擦音',
-    nameHungarian: 'Zöngés alveoláris affrikáta (magyar dz)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'affricate',
-    description: {
-      en: 'A voiced affricate combining alveolar stop /d/ and fricative /z/ (magyar "dz").',
-      ja: '「d」の破裂から「z」の摩擦へ有声のまま移行する音。',
-      hu: 'A d zárhangból és z réshangból álló zöngés affrikáta (a magyar dz).'
-    },
-    articulatoryGuide: {
-      en: 'Hold tongue tip at alveolar ridge with vocal cord vibration, release into a buzzing "dz".',
-      ja: '声帯を振るわせながら舌先を歯茎につけ、瞬時に「ズ」の摩擦へ解き放ちます。',
-      hu: 'Rezgesd a hangszalagjaidat, állítsd meg a levegőt, majd engedd el "dz" hangként.'
-    },
-    exampleWords: [
-      { word: 'edző', language: 'Hungarian', languageCode: 'hu', transcription: '/ɛdzoː/', meaning: 'Coach', targetSoundIndex: 1 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d8/Voiced_alveolar_sibilant_affricate.oga/Voiced_alveolar_sibilant_affricate.oga.mp3',
-    relatedSymbols: ['ts', 'd', 'z'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 13,
-    isCore: true
-  },
-  {
-    id: 'affricate_tsh',
-    symbol: 't̠ʃ',
-    unicode: 'U+0074 U+0283',
-    nameEnglish: 'Voiceless postalveolar affricate',
-    nameJapanese: '無声後歯茎破擦音',
-    nameHungarian: 'Zöngétlen posztalveoláris affrikáta (magyar cs)',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'postalveolar',
-    mannerOfArticulation: 'affricate',
-    description: {
-      en: 'A voiceless affricate starting behind alveolar ridge and releasing into /ʃ/ ("ch" in "chair", magyar "cs").',
-      ja: '「t」から「ʃ（シュ）」へつなげる無声破擦音（日本語の「チ」の頭音、英語のch）。',
-      hu: 'A t zárhangból és ʃ (s) réshangból álló zöngétlen affrikáta (a magyar cs).'
-    },
-    articulatoryGuide: {
-      en: 'Place tongue tip behind tooth ridge, block air, release into a soft "ch" friction without voicing.',
-      ja: '歯茎の後ろで息を止め、唇を軽く丸めて一気に「チ」と吐き出します。',
-      hu: 'Tedd a nyelved a fogmeder mögé, zárd el a levegőt, majd fújd ki "cs" hangként.'
-    },
-    exampleWords: [
-      { word: 'chair', language: 'English', languageCode: 'en', transcription: '/tʃɛər/', meaning: 'Seat', targetSoundIndex: 0 },
-      { word: 'család', language: 'Hungarian', languageCode: 'hu', transcription: '/tʃɒlaːd/', meaning: 'Family', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/9/97/Voiceless_palato-alveolar_affricate.ogg/Voiceless_palato-alveolar_affricate.ogg.mp3',
-    relatedSymbols: ['esh', 'd̠ʒ', 'ts'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 14,
-    isCore: true
-  },
-  {
-    id: 'affricate_dzh',
-    symbol: 'd̠ʒ',
-    unicode: 'U+0064 U+0292',
-    nameEnglish: 'Voiced postalveolar affricate',
-    nameJapanese: '有声後歯茎破擦音',
-    nameHungarian: 'Zöngés posztalveoláris affrikáta (magyar dzs)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'postalveolar',
-    mannerOfArticulation: 'affricate',
-    description: {
-      en: 'A voiced affricate starting behind alveolar ridge and releasing into /ʒ/ ("j" in "jump", magyar "dzs").',
-      ja: '有声のまま「d」から「ʒ（ジュ）」へ開放する音（英語のj）。',
-      hu: 'A d zárhangból és ʒ (zs) réshangból álló zöngés affrikáta (a magyar dzs).'
-    },
-    articulatoryGuide: {
-      en: 'Block air at postalveolar position while vibrating vocal cords, release into "j" friction.',
-      ja: '声帯を振るわせつつ後歯茎で息を止め、「ジ」と一気に解放します。',
-      hu: 'Rezgesd a hangszalagokat, zárd a levegőt posztalveolárisan, majd engedd el "dzs" hangként.'
-    },
-    exampleWords: [
-      { word: 'jump', language: 'English', languageCode: 'en', transcription: '/dʒʌmp/', meaning: 'Leap', targetSoundIndex: 0 },
-      { word: 'dzsem', language: 'Hungarian', languageCode: 'hu', transcription: '/dʒɛm/', meaning: 'Jam', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e6/Voiced_palato-alveolar_affricate.ogg/Voiced_palato-alveolar_affricate.ogg.mp3',
-    relatedSymbols: ['ezh', 't̠ʃ', 'dz'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 15,
-    isCore: true
-  },
-
-  // ==========================================
-  // PULMONIC CONSONANTS: FRICATIVES
-  // ==========================================
-  {
-    id: 'f',
-    symbol: 'f',
-    unicode: 'U+0066',
-    nameEnglish: 'Voiceless labiodental fricative',
-    nameJapanese: '無声唇歯摩擦音',
-    nameHungarian: 'Zöngétlen labiodentális frikatíva',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'labiodental',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiceless fricative produced by forcing air between upper teeth and lower lip.',
-      ja: '上の前歯を下唇に軽く触れさせ、隙間から息を吹く無声摩擦音。',
-      hu: 'Zöngétlen ajak-fog réshang.'
-    },
-    articulatoryGuide: {
-      en: 'Touch upper teeth gently onto inner lower lip, push air through without vocal cord vibration.',
-      ja: '上の歯を下唇の内側に軽くのせ、その隙間から息を強く吹き出します。',
-      hu: 'Enyhén érintsd a felső fogsorodat az alsó ajkadhoz, és fújd át a levegőt.'
-    },
-    exampleWords: [
-      { word: 'fish', language: 'English', languageCode: 'en', transcription: '/fɪʃ/', meaning: 'Aquatic animal', targetSoundIndex: 0 },
-      { word: 'fa', language: 'Hungarian', languageCode: 'hu', transcription: '/fɒ/', meaning: 'Tree', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c7/Voiceless_labio-dental_fricative.ogg/Voiceless_labio-dental_fricative.ogg.mp3',
-    relatedSymbols: ['v', 'ɸ', 'θ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 16,
-    isCore: true
-  },
-  {
-    id: 'v',
-    symbol: 'v',
-    unicode: 'U+0076',
-    nameEnglish: 'Voiced labiodental fricative',
-    nameJapanese: '有声唇歯摩擦音',
-    nameHungarian: 'Zöngés labiodentális frikatíva',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'labiodental',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiced fricative produced by air rubbing between lower lip and upper teeth.',
-      ja: '上の歯を下唇に当て、声を出しながら隙間から息を通す有声摩擦音。',
-      hu: 'Zöngés ajak-fog réshang.'
-    },
-    articulatoryGuide: {
-      en: 'Position upper teeth on lower lip, vibrate vocal cords while forcing air out.',
-      ja: '上の歯を下唇につけ、声帯を震わせながら息を吹き出します。',
-      hu: 'Helyezd a felső fogsorodat az alsó ajkadra, rezgesd a hangszalagjaidat.'
-    },
-    exampleWords: [
-      { word: 'voice', language: 'English', languageCode: 'en', transcription: '/vɔɪs/', meaning: 'Vocal sound', targetSoundIndex: 0 },
-      { word: 'víz', language: 'Hungarian', languageCode: 'hu', transcription: '/viːz/', meaning: 'Water', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/4/42/Voiced_labio-dental_fricative.ogg/Voiced_labio-dental_fricative.ogg.mp3',
-    relatedSymbols: ['f', 'β', 'ð'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 17,
-    isCore: true
-  },
-  {
-    id: 'theta',
-    symbol: 'θ',
-    unicode: 'U+03B8',
-    nameEnglish: 'Voiceless dental fricative',
-    nameJapanese: '無声歯摩擦音',
-    nameHungarian: 'Zöngétlen dentális frikatíva',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'dental',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiceless dental fricative sound as in English "think".',
-      ja: '舌先を上下の歯の間に軽く挟むか裏側に当てて息を吹き出す無声音（thの音）。',
-      hu: 'Zöngétlen fogi réshang (mint az angol "think"-ben).'
-    },
-    articulatoryGuide: {
-      en: 'Place tongue tip between or behind front teeth, blow air gently without voice.',
-      ja: '舌先を上の前歯につけ、隙間から「ス」と息を吹き出します。',
-      hu: 'Tedd a nyelvhegyet a metszőfogakhoz, és fújj át levegőt.'
-    },
-    exampleWords: [
-      { word: 'think', language: 'English', languageCode: 'en', transcription: '/θɪŋk/', meaning: 'Ponder', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/8/80/Voiceless_dental_fricative.ogg/Voiceless_dental_fricative.ogg.mp3',
-    relatedSymbols: ['ð', 'f', 's'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 18,
-    isCore: true
-  },
-  {
-    id: 'eth',
-    symbol: 'ð',
-    unicode: 'U+00F0',
-    nameEnglish: 'Voiced dental fricative',
-    nameJapanese: '有声歯摩擦音',
-    nameHungarian: 'Zöngés dentális frikatíva',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'dental',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiced dental fricative sound as in English "this".',
-      ja: '舌先を前歯に触れさせ、声帯を振るわせて息を摩擦させる音（thの有声音）。',
-      hu: 'Zöngés fogi réshang (mint az angol "this"-ben).'
-    },
-    articulatoryGuide: {
-      en: 'Place tongue tip against upper front teeth, push air while vibrating vocal cords.',
-      ja: '舌先を前歯につけ、声を出しながら息を通します。',
-      hu: 'Tedd a nyelvhegyet a metszőfogakhoz, és rezgesd a hangszalagjaidat.'
-    },
-    exampleWords: [
-      { word: 'this', language: 'English', languageCode: 'en', transcription: '/ðɪs/', meaning: 'Demonstrative', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6a/Voiced_dental_fricative.ogg/Voiced_dental_fricative.ogg.mp3',
-    relatedSymbols: ['θ', 'v', 'z'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 19,
-    isCore: true
-  },
-  {
-    id: 's',
-    symbol: 's',
-    unicode: 'U+0073',
-    nameEnglish: 'Voiceless alveolar fricative',
-    nameJapanese: '無声歯茎摩擦音',
-    nameHungarian: 'Zöngétlen alveoláris frikatíva (magyar sz)',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiceless sibilant fricative made at the alveolar ridge (magyar "sz").',
-      ja: '舌先を歯茎に近づけて狭い隙間を作り、強い息を通して出す摩擦音。',
-      hu: 'Zöngétlen fogmedri sziszegő réshang (a magyar sz).'
-    },
-    articulatoryGuide: {
-      en: 'Form a narrow groove along tongue center near alveolar ridge, blow air sharply without voice.',
-      ja: '舌の中央に溝を作り、歯茎に向かって息を吹き出します。',
-      hu: 'Képezz keskeny rést a nyelved közepén a fogmedernél, és fújj át rajta levegőt.'
-    },
-    exampleWords: [
-      { word: 'sun', language: 'English', languageCode: 'en', transcription: '/sʌn/', meaning: 'Star', targetSoundIndex: 0 },
-      { word: 'szép', language: 'Hungarian', languageCode: 'hu', transcription: '/seːp/', meaning: 'Beautiful', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ac/Voiceless_alveolar_sibilant.ogg/Voiceless_alveolar_sibilant.ogg.mp3',
-    relatedSymbols: ['z', 'ʃ', 'θ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 20,
-    isCore: true
-  },
-  {
-    id: 'z',
-    symbol: 'z',
-    unicode: 'U+007A',
-    nameEnglish: 'Voiced alveolar fricative',
-    nameJapanese: '有声歯茎摩擦音',
-    nameHungarian: 'Zöngés alveoláris frikatíva (magyar z)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiced sibilant fricative produced at the alveolar ridge (magyar "z").',
-      ja: '声帯を振るわせながら、舌先と歯茎の隙間から息を出す有声摩擦音。',
-      hu: 'Zöngés fogmedri sziszegő réshang (a magyar z).'
-    },
-    articulatoryGuide: {
-      en: 'Make an /s/ shape with tongue, but vibrate vocal cords to create a buzzing sound.',
-      ja: '「ス」の舌の形を保ちながら、声を「ズー」と出します。',
-      hu: 'Képezz "sz" alakot a nyelveddel, de rezgesd a hangszalagjaidat.'
-    },
-    exampleWords: [
-      { word: 'zoo', language: 'English', languageCode: 'en', transcription: '/zuː/', meaning: 'Animal park', targetSoundIndex: 0 },
-      { word: 'zöld', language: 'Hungarian', languageCode: 'hu', transcription: '/zøld/', meaning: 'Green', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Voiced_alveolar_sibilant.ogg/Voiced_alveolar_sibilant.ogg.mp3',
-    relatedSymbols: ['s', 'ʒ', 'ð'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 21,
-    isCore: true
-  },
-  {
-    id: 'esh',
-    symbol: 'ʃ',
-    unicode: 'U+0283',
-    nameEnglish: 'Voiceless postalveolar fricative',
-    nameJapanese: '無声後歯茎摩擦音',
-    nameHungarian: 'Zöngétlen posztalveoláris frikatíva (magyar s)',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'postalveolar',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiceless postalveolar fricative sound ("sh" in "shoe", magyar "s").',
-      ja: '舌を歯茎の後ろに近づけて息を吹き出す無声摩擦音（シュの音）。',
-      hu: 'Zöngétlen posztalveoláris réshang (a magyar s).'
-    },
-    articulatoryGuide: {
-      en: 'Raise front of tongue right behind alveolar ridge, slightly round lips, push air out.',
-      ja: '舌前部を歯茎の少し後ろへ盛り上げ、唇を丸めて息を通します。',
-      hu: 'Emeld a nyelv elülső részét a fogmeder mögé, kerekítsd az ajkadat.'
-    },
-    exampleWords: [
-      { word: 'she', language: 'English', languageCode: 'en', transcription: '/ʃiː/', meaning: 'Female pronoun', targetSoundIndex: 0 },
-      { word: 'só', language: 'Hungarian', languageCode: 'hu', transcription: '/ʃoː/', meaning: 'Salt', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cc/Voiceless_palato-alveolar_sibilant.ogg/Voiceless_palato-alveolar_sibilant.ogg.mp3',
-    relatedSymbols: ['ʒ', 's', 'ɕ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 22,
-    isCore: true
-  },
-  {
-    id: 'ezh',
-    symbol: 'ʒ',
-    unicode: 'U+0292',
-    nameEnglish: 'Voiced postalveolar fricative',
-    nameJapanese: '有声後歯茎摩擦音',
-    nameHungarian: 'Zöngés posztalveoláris frikatíva (magyar zs)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'postalveolar',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiced postalveolar fricative sound ("s" in "measure", magyar "zs").',
-      ja: '声帯を振動させながら後歯茎で息を摩擦させる音。',
-      hu: 'Zöngés posztalveoláris réshang (a magyar zs).'
-    },
-    articulatoryGuide: {
-      en: 'Form the same tongue position as /ʃ/ ("sh"), but vibrate vocal cords.',
-      ja: '「シュ」と同じ舌の位置で、声帯を振るわせて「ジュ」と発声します。',
-      hu: 'Képezz "s" pozíciót a nyelveddel, de rezgesd a hangszalagokat.'
-    },
-    exampleWords: [
-      { word: 'vision', language: 'English', languageCode: 'en', transcription: '/ˈvɪʒ.ən/', meaning: 'Sight', targetSoundIndex: 2 },
-      { word: 'zseb', language: 'Hungarian', languageCode: 'hu', transcription: '/ʒɛb/', meaning: 'Pocket', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/3/30/Voiced_palato-alveolar_sibilant.ogg/Voiced_palato-alveolar_sibilant.ogg.mp3',
-    relatedSymbols: ['ʃ', 'z', 'ʑ'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 23,
-    isCore: true
-  },
-  {
-    id: 'x',
-    symbol: 'x',
-    unicode: 'U+0078',
-    nameEnglish: 'Voiceless velar fricative',
-    nameJapanese: '無声軟口蓋摩擦音',
-    nameHungarian: 'Zöngétlen veláris frikatíva (magyar ch)',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'velar',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiceless velar fricative sound (German "ach", Scottish "loch", magyar "pech").',
-      ja: '舌の奥を軟口蓋に近づけて隙間を作り、強い息を通す無声摩擦音。',
-      hu: 'Zöngétlen veláris réshang (a magyar "pech" végén).'
-    },
-    articulatoryGuide: {
-      en: 'Raise back of tongue toward soft palate without complete closure, blow air for rasping friction.',
-      ja: '舌奥を軟口蓋に近づけ、狭い隙間から強い息をこすり出します。',
-      hu: 'Emeld a nyelv hátulját a lágy szájpadláshoz, de ne zárd el teljesen.'
-    },
-    exampleWords: [
-      { word: 'Loch', language: 'Scottish English', languageCode: 'gd', transcription: '/lɒx/', meaning: 'Lake', targetSoundIndex: 2 },
-      { word: 'pech', language: 'Hungarian', languageCode: 'hu', transcription: '/pɛx/', meaning: 'Bad luck', targetSoundIndex: 2 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0f/Voiceless_velar_fricative.ogg/Voiceless_velar_fricative.ogg.mp3',
-    relatedSymbols: ['ɣ', 'χ', 'h'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 24,
-    isCore: true
-  },
-  {
-    id: 'gh',
-    symbol: 'ɣ',
-    unicode: 'U+0263',
-    nameEnglish: 'Voiced velar fricative',
-    nameJapanese: '有声軟口蓋摩擦音',
-    nameHungarian: 'Zöngés veláris frikatíva',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'velar',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiced velar fricative sound (Spanish "fuego" /g/ sound).',
-      ja: '軟口蓋で喉奥を鳴らしながら息をこすり出す有声摩擦音。',
-      hu: 'Zöngés veláris réshang.'
-    },
-    articulatoryGuide: {
-      en: 'Hold back of tongue near soft palate (like /x/), but add vocal cord vibration.',
-      ja: '/x/と同じ口の形で、声を「ガー」とうならせるように出します。',
-      hu: 'Tartsd a nyelved a lágy szájpadlás közelében, és rezgesd a hangszalagjaidat.'
-    },
-    exampleWords: [
-      { word: 'fuego', language: 'Spanish', languageCode: 'es', transcription: '/ˈfweɣo/', meaning: 'Fire', targetSoundIndex: 3 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/4/47/Voiced_velar_fricative.ogg/Voiced_velar_fricative.ogg.mp3',
-    relatedSymbols: ['x', 'ɡ', 'ʁ'],
-    commonConfusions: [],
-    difficulty: 'advanced',
-    lessonOrder: 25,
-    isCore: true
-  },
-  {
-    id: 'h',
-    symbol: 'h',
-    unicode: 'U+0068',
-    nameEnglish: 'Voiceless glottal fricative',
-    nameJapanese: '無声声門摩擦音',
-    nameHungarian: 'Zöngétlen glottális frikatíva (magyar h)',
-    category: 'pulmonic',
-    voicing: 'voiceless',
-    placeOfArticulation: 'glottal',
-    mannerOfArticulation: 'fricative',
-    description: {
-      en: 'A voiceless glottal fricative produced by air friction at the vocal folds.',
-      ja: '声門を開いて息をそのまま通過させる摩擦音。',
-      hu: 'Zöngétlen gégehang (a magyar h).'
-    },
-    articulatoryGuide: {
-      en: 'Exhale breath through open vocal folds without shaping tongue heavily.',
-      ja: '口を自然に開け、声帯を開いたまま息を「ハー」と吐き出します。',
-      hu: 'Lélegezz ki nyitott hangszalagok mellett.'
-    },
-    exampleWords: [
-      { word: 'house', language: 'English', languageCode: 'en', transcription: '/haʊs/', meaning: 'Home', targetSoundIndex: 0 },
-      { word: 'ház', language: 'Hungarian', languageCode: 'hu', transcription: '/haːz/', meaning: 'House', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/d/da/Voiceless_glottal_fricative.ogg/Voiceless_glottal_fricative.ogg.mp3',
-    relatedSymbols: ['ɦ', 'x', 'ç'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 26,
-    isCore: true
-  },
-
-  // ==========================================
-  // PULMONIC CONSONANTS: APPROXIMANTS, TAPS & TRILLS
-  // ==========================================
-  {
-    id: 'l',
-    symbol: 'l',
-    unicode: 'U+006C',
-    nameEnglish: 'Voiced alveolar lateral approximant',
-    nameJapanese: '有声歯茎側面接近音',
-    nameHungarian: 'Zöngés alveoláris laterális approximáns (magyar l)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'lateral-approximant',
-    description: {
-      en: 'A voiced lateral approximant made with tongue tip on alveolar ridge while air flows around sides.',
-      ja: '舌先を歯茎につけ、舌の両脇から息と声を逃がす音。',
-      hu: 'Zöngés fogmedri oldalsó megközelítő hang (a magyar l).'
-    },
-    articulatoryGuide: {
-      en: 'Place tongue tip against upper teeth ridge, lower sides of tongue to let voiced air pass.',
-      ja: '舌先を歯茎に固定し、舌の側面を開けて声を滑らかに出します。',
-      hu: 'Érintsd a nyelvhegyedet a fogmederhez, engedd le a nyelv oldalait.'
-    },
-    exampleWords: [
-      { word: 'love', language: 'English', languageCode: 'en', transcription: '/lʌv/', meaning: 'Affection', targetSoundIndex: 0 },
-      { word: 'ló', language: 'Hungarian', languageCode: 'hu', transcription: '/loː/', meaning: 'Horse', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Alveolar_lateral_approximant.ogg/Alveolar_lateral_approximant.ogg.mp3',
-    relatedSymbols: ['r', 'ʎ', 'ɫ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 27,
-    isCore: true
-  },
-  {
-    id: 'r_tap',
-    symbol: 'ɾ',
-    unicode: 'U+027E',
-    nameEnglish: 'Voiced alveolar tap/flap',
-    nameJapanese: '有声歯茎はじき音',
-    nameHungarian: 'Zöngés alveoláris legyintőhang (spanyol r)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'tap-flap',
-    description: {
-      en: 'A quick single tap of tongue against alveolar ridge (Spanish single "r", American "butter").',
-      ja: '舌先で歯茎を軽く1回だけ「ポン」とはじく音（日本語の「ラ」行音）。',
-      hu: 'A nyelvhegy egyetlen gyors érintése a fogmedren.'
-    },
-    articulatoryGuide: {
-      en: 'Flick tongue tip rapidly against alveolar ridge once while voicing.',
-      ja: '舌先を脱力し、歯茎を一瞬だけ1回はじくように当てます。',
-      hu: 'Pattintsd a nyelvhegyet gyorsan a fogmederhez egyszer.'
-    },
-    exampleWords: [
-      { word: 'pero', language: 'Spanish', languageCode: 'es', transcription: '/ˈpeɾo/', meaning: 'But', targetSoundIndex: 2 },
-      { word: 'ラーメン', language: 'Japanese', languageCode: 'ja', transcription: '/ɾaːmeɴ/', meaning: 'Ramen', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Alveolar_tap.ogg/Alveolar_tap.ogg.mp3',
-    relatedSymbols: ['r', 'r_trill', 'l'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 28,
-    isCore: true
-  },
-  {
-    id: 'r_trill',
-    symbol: 'r',
-    unicode: 'U+0072',
-    nameEnglish: 'Voiced alveolar trill',
-    nameJapanese: '有声歯茎ふるえ音',
-    nameHungarian: 'Zöngés alveoláris pergetett r',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'alveolar',
-    mannerOfArticulation: 'trill',
-    description: {
-      en: 'A rolling trill sound made by rapid repeated vibrations of tongue tip against alveolar ridge.',
-      ja: '舌先を歯茎で幾度も震わせる巻き舌の音（スペイン語のrr、ハンガリー語のr）。',
-      hu: 'Zöngés pergetett r hang.'
-    },
-    articulatoryGuide: {
-      en: 'Relax tongue tip near alveolar ridge, pass a strong airstream to vibrate it repeatedly.',
-      ja: '舌先を脱力して歯茎近辺に置き、強い息を通してブルルッと震わせます。',
-      hu: 'Lazítsd el a nyelvhegyet, és fújj適強 levegőt a pergetéshez.'
-    },
-    exampleWords: [
-      { word: 'perro', language: 'Spanish', languageCode: 'es', transcription: '/ˈpero/', meaning: 'Dog', targetSoundIndex: 2 },
-      { word: 'róka', language: 'Hungarian', languageCode: 'hu', transcription: '/roːkɒ/', meaning: 'Fox', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Alveolar_trill.ogg/Alveolar_trill.ogg.mp3',
-    relatedSymbols: ['ɾ', 'ʀ', 'ʁ'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 29,
-    isCore: true
-  },
-  {
-    id: 'j',
-    symbol: 'j',
-    unicode: 'U+006A',
-    nameEnglish: 'Voiced palatal approximant',
-    nameJapanese: '有声硬口蓋接近音',
-    nameHungarian: 'Zöngés palatális approximáns (magyar j/ly)',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'palatal',
-    mannerOfArticulation: 'approximant',
-    description: {
-      en: 'A voiced palatal glide sound (English "yes", magyar "j", Japanese "ya").',
-      ja: '舌を硬口蓋に接近させて滑らかに声を出す音（ヤ行の音）。',
-      hu: 'Zöngés palatális megközelítő hang (a magyar j és ly).'
-    },
-    articulatoryGuide: {
-      en: 'Raise middle body of tongue toward roof of mouth (palate) and transition smoothly into vowel.',
-      ja: '舌の中央部を口の天井に近づけ、滑らかに「ヤ」と発声します。',
-      hu: 'Emeld a nyelv középső részét a szájpadláshoz, és lágyan siklass át.'
-    },
-    exampleWords: [
-      { word: 'yes', language: 'English', languageCode: 'en', transcription: '/jɛs/', meaning: 'Affirmative', targetSoundIndex: 0 },
-      { word: 'jó', language: 'Hungarian', languageCode: 'hu', transcription: '/joː/', meaning: 'Good', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Palatal_approximant.ogg/Palatal_approximant.ogg.mp3',
-    relatedSymbols: ['i', 'ɥ', 'ç'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 30,
-    isCore: true
-  },
-  {
-    id: 'w',
-    symbol: 'w',
-    unicode: 'U+0077',
-    nameEnglish: 'Voiced labial-velar approximant',
-    nameJapanese: '有声両唇軟口蓋接近音',
-    nameHungarian: 'Zöngés labioveláris approximáns',
-    category: 'pulmonic',
-    voicing: 'voiced',
-    placeOfArticulation: 'labial-velar',
-    mannerOfArticulation: 'approximant',
-    description: {
-      en: 'A rounded glide produced by rounding lips while raising back of tongue toward soft palate.',
-      ja: '唇を丸めつつ舌の奥を軟口蓋に近づけて出す滑音（ワ行音、英語のw）。',
-      hu: 'Ajakkerekítéssel és a nyelv hátuljának emelésével képezett siklóhang.'
-    },
-    articulatoryGuide: {
-      en: 'Pucker lips tightly, raise back of tongue toward velum, and release quickly with voice.',
-      ja: '唇をしっかり丸め、舌の奥を持ち上げながら声を瞬時に出します。',
-      hu: 'Kerekítsd az ajkaidat, emeld a nyelv hátulját, és engedd át a hangot.'
-    },
-    exampleWords: [
-      { word: 'water', language: 'English', languageCode: 'en', transcription: '/ˈwɔːtər/', meaning: 'Liquid H2O', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f2/Voiced_labio-velar_approximant.ogg/Voiced_labio-velar_approximant.ogg.mp3',
-    relatedSymbols: ['u', 'v', 'ʍ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 31,
-    isCore: true
-  },
-
-  // ==========================================
-  // VOWELS (COMPLETE INTERACTIVE INVENTORY)
-  // ==========================================
-  {
-    id: 'i',
-    symbol: 'i',
-    unicode: 'U+0069',
-    nameEnglish: 'Close front unrounded vowel',
-    nameJapanese: '非円唇前舌狭母音',
-    nameHungarian: 'Zárt elülső ajakréses magánhangzó (magyar i/í)',
-    category: 'vowels',
-    vowelHeight: 'close',
-    vowelBackness: 'front',
-    roundness: 'unrounded',
-    description: {
-      en: 'A high, front unrounded vowel (as in English "see", magyar "í", Japanese "い").',
-      ja: '舌を前上方に引き上げ、唇を丸めずに広げて出す高母音（イの音）。',
-      hu: 'Zárt, elülső képezésű ajakréses magánhangzó (a magyar i és í).'
-    },
-    articulatoryGuide: {
-      en: 'Raise the front of your tongue high toward the hard palate, spread lips widely.',
-      ja: '舌の前部を高く口の天井に近づけ、唇を横にひいて「イー」と発音します。',
-      hu: 'Emeld a nyelv elülső részét magasra a szájpadláshoz, és húzd szélesre az ajkaidat.'
-    },
-    exampleWords: [
-      { word: 'see', language: 'English', languageCode: 'en', transcription: '/siː/', meaning: 'Perceive', targetSoundIndex: 1 },
-      { word: 'így', language: 'Hungarian', languageCode: 'hu', transcription: '/iːɟ/', meaning: 'Like this', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Close_front_unrounded_vowel.ogg',
-    relatedSymbols: ['y', 'ɪ', 'e'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 32,
-    isCore: true
-  },
-  {
-    id: 'y',
-    symbol: 'y',
-    unicode: 'U+0079',
-    nameEnglish: 'Close front rounded vowel',
-    nameJapanese: '円唇前舌狭母音',
-    nameHungarian: 'Zárt elülső ajakkerekítéses magánhangzó (magyar ü/ű)',
-    category: 'vowels',
-    vowelHeight: 'close',
-    vowelBackness: 'front',
-    roundness: 'rounded',
-    description: {
-      en: 'A high front vowel with rounded lips (French "tu", German "über", magyar "ü").',
-      ja: '「イ」と言う舌の形のまま、唇を丸めて「ウ」のように発声する母音。',
-      hu: 'Zárt elülső magánhangzó ajakkerekítéssel (a magyar ü/ű).'
-    },
-    articulatoryGuide: {
-      en: 'Hold tongue in /i/ position, but round lips tightly like /u/.',
-      ja: '「イー」の舌の位置で、唇だけ「ウー」のように丸めます。',
-      hu: 'Formázz "i" pozíciót a nyelveddel, de kerekítsd az ajkaidat.'
-    },
-    exampleWords: [
-      { word: 'üveg', language: 'Hungarian', languageCode: 'hu', transcription: '/yvɛɡ/', meaning: 'Glass', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Close_front_rounded_vowel.ogg',
-    relatedSymbols: ['i', 'u', 'ʏ'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 33,
-    isCore: true
-  },
-  {
-    id: 'e',
-    symbol: 'e',
-    unicode: 'U+0065',
-    nameEnglish: 'Close-mid front unrounded vowel',
-    nameJapanese: '非円唇前舌半狭母音',
-    nameHungarian: 'Középső-zárt elülső ajakréses magánhangzó (magyar é)',
-    category: 'vowels',
-    vowelHeight: 'close-mid',
-    vowelBackness: 'front',
-    roundness: 'unrounded',
-    description: {
-      en: 'A close-mid front unrounded vowel (Spanish "e", French "été", magyar "é").',
-      ja: '「イ」と「エ」の中間よりやや高めの前舌母音。',
-      hu: 'Középső-zárt elülső magánhangzó (a magyar é hang).'
-    },
-    articulatoryGuide: {
-      en: 'Position tongue in front, slightly lower than /i/, unrounded lips.',
-      ja: '「イ」の位置からほんの少し顎を下げ、唇を開いて「エー」と発声します。',
-      hu: 'Tedd a nyelved előre, kissé alacsonyabban mint az /i/-nél.'
-    },
-    exampleWords: [
-      { word: 'év', language: 'Hungarian', languageCode: 'hu', transcription: '/eːv/', meaning: 'Year', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/2/22/Close-mid_front_unrounded_vowel.ogg',
-    relatedSymbols: ['i', 'ɛ', 'ø'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 34,
-    isCore: true
-  },
-  {
-    id: 'epsilon',
-    symbol: 'ɛ',
-    unicode: 'U+025B',
-    nameEnglish: 'Open-mid front unrounded vowel',
-    nameJapanese: '非円唇前舌半広母音',
-    nameHungarian: 'Középső-nyílt elülső ajakréses magánhangzó (magyar e)',
-    category: 'vowels',
-    vowelHeight: 'open-mid',
-    vowelBackness: 'front',
-    roundness: 'unrounded',
-    description: {
-      en: 'An open-mid front vowel (English "bed", magyar "e").',
-      ja: '口を大きめに開けて発声する前舌のエの音。',
-      hu: 'Középső-nyílt elülső ajakréses magánhangzó (a magyar e).'
-    },
-    articulatoryGuide: {
-      en: 'Lower mouth slightly lower than /e/, open lips comfortably into a relaxed front vowel.',
-      ja: '「エ」より少し口を縦に広く開けて発音します。',
-      hu: 'Nyisd a szád kissé tágabbra mint az /e/-nél.'
-    },
-    exampleWords: [
-      { word: 'bed', language: 'English', languageCode: 'en', transcription: '/bɛd/', meaning: 'Bed', targetSoundIndex: 1 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Open-mid_front_unrounded_vowel.ogg',
-    relatedSymbols: ['e', 'æ', 'œ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 35,
-    isCore: true
-  },
-  {
-    id: 'ash',
-    symbol: 'æ',
-    unicode: 'U+00E6',
-    nameEnglish: 'Near-open front unrounded vowel',
-    nameJapanese: '非円唇前舌近広母音',
-    nameHungarian: 'Majdnem nyílt elülső ajakréses magánhangzó (angol cat)',
-    category: 'vowels',
-    vowelHeight: 'near-open',
-    vowelBackness: 'front',
-    roundness: 'unrounded',
-    description: {
-      en: 'A broad open front unrounded vowel as in English "cat".',
-      ja: '「ア」と「エ」の中間のような広く開けた前舌音。',
-      hu: 'Szélesen nyitott elülső magánhangzó (mint az angol "cat"-ben).'
-    },
-    articulatoryGuide: {
-      en: 'Drop lower jaw wide while keeping tongue body forward and flat.',
-      ja: '顎を大きく下げ、舌を前方に保ちながら「ア」と「エ」の間の音を出します。',
-      hu: 'Engedd le az álladat tágra, tartsd a nyelved előre tolva.'
-    },
-    exampleWords: [
-      { word: 'cat', language: 'English', languageCode: 'en', transcription: '/kæt/', meaning: 'Cat', targetSoundIndex: 1 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Near-open_front_unrounded_vowel.ogg',
-    relatedSymbols: ['ɛ', 'a', 'ʌ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 36,
-    isCore: true
-  },
-  {
-    id: 'a',
-    symbol: 'a',
-    unicode: 'U+0061',
-    nameEnglish: 'Open front unrounded vowel',
-    nameJapanese: '非円唇前舌広母音',
-    nameHungarian: 'Nyílt elülső ajakréses magánhangzó (magyar á)',
-    category: 'vowels',
-    vowelHeight: 'open',
-    vowelBackness: 'front',
-    roundness: 'unrounded',
-    description: {
-      en: 'An open front vowel (Spanish "a", magyar "á", Japanese "あ").',
-      ja: '口を大きく開けて舌の位置を前に置いた明るいアの音。',
-      hu: 'Teljesen nyitott elülső ajakréses magánhangzó (a magyar á).'
-    },
-    articulatoryGuide: {
-      en: 'Open mouth wide, rest tongue low and forward, pronounce clear open "a".',
-      ja: '口を大きく開き、舌を低い位置の前寄りに置いて発声します。',
-      hu: 'Nyisd ki a szád tágra, a nyelv laposan pihen elöl.'
-    },
-    exampleWords: [
-      { word: 'ágy', language: 'Hungarian', languageCode: 'hu', transcription: '/aːɟ/', meaning: 'Bed', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Open_front_unrounded_vowel.ogg',
-    relatedSymbols: ['æ', 'ɑ', 'ɒ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 37,
-    isCore: true
-  },
-  {
-    id: 'schwa',
-    symbol: 'ə',
-    unicode: 'U+0259',
-    nameEnglish: 'Mid central vowel (schwa)',
-    nameJapanese: '中舌中央母音（シュワー）',
-    nameHungarian: 'Középső középső magánhangzó (schwa)',
-    category: 'vowels',
-    vowelHeight: 'mid',
-    vowelBackness: 'central',
-    roundness: 'unrounded',
-    description: {
-      en: 'The neutral central unstressed vowel sound in English ("about", "sofa").',
-      ja: '口や舌に力を入れずに曖昧に出す中性的な母音（シュワー）。',
-      hu: 'A semleges központi magánhangzó (schwa).'
-    },
-    articulatoryGuide: {
-      en: 'Relax tongue and mouth completely in center position, make a short vocal sound.',
-      ja: '口も舌もリラックスさせ、力を抜いて短く発声します。',
-      hu: 'Lazítsd el a nyelved és a szádat teljesen középen.'
-    },
-    exampleWords: [
-      { word: 'about', language: 'English', languageCode: 'en', transcription: '/əˈbaʊt/', meaning: 'Regarding', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Mid-central_vowel.ogg',
-    relatedSymbols: ['ʌ', 'ɜ', 'a'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 38,
-    isCore: true
-  },
-  {
-    id: 'u',
-    symbol: 'u',
-    unicode: 'U+0075',
-    nameEnglish: 'Close back rounded vowel',
-    nameJapanese: '円唇後舌狭母音',
-    nameHungarian: 'Zárt hátsó ajakkerekítéses magánhangzó (magyar u/ú)',
-    category: 'vowels',
-    vowelHeight: 'close',
-    vowelBackness: 'back',
-    roundness: 'rounded',
-    description: {
-      en: 'A high back rounded vowel (English "boot", magyar "ú").',
-      ja: '舌奥を高く持ち上げ、唇を丸めて突き出して出す音（ウの原形）。',
-      hu: 'Zárt, hátsó ajakkerekítéses magánhangzó (a magyar u/ú).'
-    },
-    articulatoryGuide: {
-      en: 'Pull tongue back and high toward soft palate, purse lips into a tight small circle.',
-      ja: '舌奥を軟口蓋に向けて高く引き上げ、唇を小さく丸めて「ウー」と出します。',
-      hu: 'Húzd a nyelved hátra és fel, kerekítsd az ajkaidat szoros kis körre.'
-    },
-    exampleWords: [
-      { word: 'boot', language: 'English', languageCode: 'en', transcription: '/buːt/', meaning: 'Footwear', targetSoundIndex: 1 },
-      { word: 'út', language: 'Hungarian', languageCode: 'hu', transcription: '/uːt/', meaning: 'Road', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Close_back_rounded_vowel.ogg',
-    relatedSymbols: ['ɯ', 'ʊ', 'o'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 39,
-    isCore: true
-  },
-  {
-    id: 'o',
-    symbol: 'o',
-    unicode: 'U+006F',
-    nameEnglish: 'Close-mid back rounded vowel',
-    nameJapanese: '円唇後舌半狭母音',
-    nameHungarian: 'Középső-zárt hátsó ajakkerekítéses magánhangzó (magyar ó)',
-    category: 'vowels',
-    vowelHeight: 'close-mid',
-    vowelBackness: 'back',
-    roundness: 'rounded',
-    description: {
-      en: 'A close-mid back rounded vowel (Spanish "o", magyar "ó").',
-      ja: '唇を丸め、舌の奥を中高の位置に置いて出すオーの音。',
-      hu: 'Középső-zárt hátsó ajakkerekítéses magánhangzó (a magyar ó).'
-    },
-    articulatoryGuide: {
-      en: 'Position tongue back, slightly lower than /u/, lips rounded into medium circle.',
-      ja: '/u/よりも少し口を開け、唇を丸めたままオの音を出します。',
-      hu: 'Helyezd a nyelved hátra, kissé alacsonyabban mint az /u/-nál.'
-    },
-    exampleWords: [
-      { word: 'ófa', language: 'Hungarian', languageCode: 'hu', transcription: '/oːfɒ/', meaning: 'Old tree', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Close-mid_back_rounded_vowel.ogg',
-    relatedSymbols: ['u', 'ɔ', 'oː'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 40,
-    isCore: true
-  },
-  {
-    id: 'open_o',
-    symbol: 'ɔ',
-    unicode: 'U+0254',
-    nameEnglish: 'Open-mid back rounded vowel',
-    nameJapanese: '円唇後舌半広母音',
-    nameHungarian: 'Középső-nyílt hátsó ajakkerekítéses magánhangzó (magyar o)',
-    category: 'vowels',
-    vowelHeight: 'open-mid',
-    vowelBackness: 'back',
-    roundness: 'rounded',
-    description: {
-      en: 'An open-mid back rounded vowel (British "thought", magyar short "o").',
-      ja: '口をより大きめに開けて発声する丸みのあるオの音。',
-      hu: 'Középső-nyílt hátsó magánhangzó (a magyar o).'
-    },
-    articulatoryGuide: {
-      en: 'Open mouth wider than /o/, rounded lips, back of tongue lowered slightly.',
-      ja: '「オ」より顎を開いて口の奥を広げ、唇を丸めて発声します。',
-      hu: 'Nyisd ki a szád tágabbra mint az /o/-nál.'
-    },
-    exampleWords: [
-      { word: 'orvos', language: 'Hungarian', languageCode: 'hu', transcription: '/ɔrvɔʃ/', meaning: 'Doctor', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/0/02/Open-mid_back_rounded_vowel.ogg',
-    relatedSymbols: ['o', 'ɒ', 'ʌ'],
-    commonConfusions: [],
-    difficulty: 'beginner',
-    lessonOrder: 41,
-    isCore: true
-  },
-  {
-    id: 'script_a',
-    symbol: 'ɑ',
-    unicode: 'U+0251',
-    nameEnglish: 'Open back unrounded vowel',
-    nameJapanese: '非円唇後舌広母音',
-    nameHungarian: 'Nyílt hátsó ajakréses magánhangzó',
-    category: 'vowels',
-    vowelHeight: 'open',
-    vowelBackness: 'back',
-    roundness: 'unrounded',
-    description: {
-      en: 'An open back unrounded vowel (English "father").',
-      ja: '口を一番大きく開け、舌を奥に低く引く非円唇の深みのあるア。',
-      hu: 'Teljesen nyitott hátsó ajakréses magánhangzó.'
-    },
-    articulatoryGuide: {
-      en: 'Drop lower jaw wide, draw tongue low into back of mouth without rounding lips.',
-      ja: '喉奥を開くように顎を下ろして口を全開にし、唇を丸めずに「アー」と出します。',
-      hu: 'Engedd le az álladat tágra, a nyelv hátul alacsonyan van.'
-    },
-    exampleWords: [
-      { word: 'father', language: 'English', languageCode: 'en', transcription: '/ˈfɑːðər/', meaning: 'Father', targetSoundIndex: 1 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Open_back_unrounded_vowel.ogg',
-    relatedSymbols: ['a', 'ɒ', 'ʌ'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 42,
-    isCore: true
-  },
-  {
-    id: 'turned_script_a',
-    symbol: 'ɒ',
-    unicode: 'U+0252',
-    nameEnglish: 'Open back rounded vowel',
-    nameJapanese: '円唇後舌広母音',
-    nameHungarian: 'Nyílt hátsó ajakkerekítéses magánhangzó (magyar a)',
-    category: 'vowels',
-    vowelHeight: 'open',
-    vowelBackness: 'back',
-    roundness: 'rounded',
-    description: {
-      en: 'An open back rounded vowel sound (magyar short "a", British "lot").',
-      ja: '口を大きく開けて舌を奥にし、唇にわずかに丸みをつけるア/オの中間音。',
-      hu: 'Teljesen nyitott hátsó ajakkerekítéses magánhangzó (a magyar a).'
-    },
-    articulatoryGuide: {
-      en: 'Form an open /ɑ/ shape at back of mouth, but round lips slightly.',
-      ja: '口を奥広く開け、唇を軽く丸めて深みのある「ア/オ」を出します。',
-      hu: 'Nyisd tágra a szád mélyen hátul, és adj hozzá enyhe ajakkerekítést.'
-    },
-    exampleWords: [
-      { word: 'alma', language: 'Hungarian', languageCode: 'hu', transcription: '/ɒlmɒ/', meaning: 'Apple', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Open_back_rounded_vowel.ogg',
-    relatedSymbols: ['ɑ', 'ɔ', 'a'],
-    commonConfusions: [],
-    difficulty: 'intermediate',
-    lessonOrder: 43,
-    isCore: true
-  },
-
-  // ==========================================
-  // NON-PULMONIC CONSONANTS
-  // ==========================================
-  {
-    id: 'click_bilabial',
-    symbol: 'ʘ',
-    unicode: 'U+0298',
-    nameEnglish: 'Bilabial click',
-    nameJapanese: '両唇吸気音（クリック）',
-    nameHungarian: 'Bilabiális csettintőhang',
-    category: 'non-pulmonic',
-    subcategory: 'click',
-    description: {
-      en: 'A kissing sound click produced by sucking air inward with closed lips.',
-      ja: '唇をすぼめて「チュッ」と息を吸い込む両唇吸気音。',
-      hu: 'Ajak-csettintés, mint egy puszilgatós hang.'
-    },
-    articulatoryGuide: {
-      en: 'Suction lips together and pull air inward quickly to make a popping kiss sound.',
-      ja: '両唇を密着させてから、息を内側に吸い込むように開放します。',
-      hu: 'Szívd be a levegőt az ajkaid között puszilózó hangot képezve.'
-    },
-    exampleWords: [
-      { word: 'ʘoa', language: 'Tuu languages', languageCode: 'ngh', transcription: '/ʘoa/', meaning: 'Phooey', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/00/Bilabial_click.ogg/Bilabial_click.ogg.mp3',
-    relatedSymbols: ['ǀ', 'ǃ', 'ǂ'],
-    commonConfusions: [],
-    difficulty: 'advanced',
-    lessonOrder: 44,
-    isCore: false
-  },
-  {
-    id: 'click_dental',
-    symbol: 'ǀ',
-    unicode: 'U+01C0',
-    nameEnglish: 'Dental click',
-    nameJapanese: '歯吸気音（「チッチッ」という音）',
-    nameHungarian: 'Dentális csettintőhang',
-    category: 'non-pulmonic',
-    subcategory: 'click',
-    description: {
-      en: 'A dental click produced by snapping tongue off front teeth (the "tsk-tsk" sound).',
-      ja: '舌先を上の前歯から引っ張って「チッチッ」と鳴らす音。',
-      hu: 'A fogak mögött képezett csettintés ("tsk-tsk" hang).'
-    },
-    articulatoryGuide: {
-      en: 'Press tongue tip against upper front teeth, create suction, and pull down sharply.',
-      ja: '舌先を前歯の裏につけて吸着させ、パチンと下へ引っ張ります。',
-      hu: 'Nyomd a nyelvhegyedet a felső metszőfogakhoz, majd rántsd le.'
-    },
-    exampleWords: [
-      { word: 'Xhosa', language: 'Xhosa', languageCode: 'xh', transcription: '/ˈkǁʰoːsa/', meaning: 'Xhosa language', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e0/Dental_click.ogg/Dental_click.ogg.mp3',
-    relatedSymbols: ['ǁ', 'ǃ', 'ʘ'],
-    commonConfusions: [],
-    difficulty: 'advanced',
-    lessonOrder: 45,
-    isCore: false
-  },
-  {
-    id: 'implosive_voiced_bilabial',
-    symbol: 'ɓ',
-    unicode: 'U+0253',
-    nameEnglish: 'Voiced bilabial implosive',
-    nameJapanese: '有声両唇内破音',
-    nameHungarian: 'Zöngés bilabiális implozíva',
-    category: 'non-pulmonic',
-    subcategory: 'implosive',
-    description: {
-      en: 'A voiced bilabial consonant produced by lowering the larynx to suck air inward.',
-      ja: '喉頭を下げて陰圧を作り、息を吸い込むように両唇を開放する音。',
-      hu: 'A gége lefelé mozgatásával képezett belső légáramú zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Close lips, pull voice box downward while saying /b/ so air rushes inward upon release.',
-      ja: '「b」の姿勢から喉仏を急速に下へ下げつつ唇を開きます。',
-      hu: 'Zárd az ajkakat, húzd le a gégédet a /b/ ejtése közben.'
-    },
-    exampleWords: [
-      { word: 'ɓaa', language: 'Hausa', languageCode: 'ha', transcription: '/ɓaa/', meaning: 'Give', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/2/23/Voiced_bilabial_implosive.ogg/Voiced_bilabial_implosive.ogg.mp3',
-    relatedSymbols: ['b', 'ɗ', 'ɠ'],
-    commonConfusions: [],
-    difficulty: 'advanced',
-    lessonOrder: 46,
-    isCore: false
-  },
-  {
-    id: 'ejective_p',
-    symbol: 'p\'',
-    unicode: 'U+0070 U+02BC',
-    nameEnglish: 'Bilabial ejective',
-    nameJapanese: '両唇放出音',
-    nameHungarian: 'Bilabiális ejektíva',
-    category: 'non-pulmonic',
-    subcategory: 'ejective',
-    description: {
-      en: 'A sharp ejective stop produced by closing vocal folds and lips, raising larynx, and popping air out.',
-      ja: '声門と唇を同時に閉じ、喉頭を持ち上げて圧力を高めて弾かせる放出音。',
-      hu: 'Két ajakkal és zárt gégével képezett kilökődő zárhang.'
-    },
-    articulatoryGuide: {
-      en: 'Close vocal cords and lips simultaneously, push larynx upward like swallowing, release lips with a pop.',
-      ja: '息を止め、喉仏を持ち上げて唇から「ッパ！」と勢いよく弾きます。',
-      hu: 'Zárd a hangszalagokat és az ajkakat, emeld fel a gégédet és pattintsd ki.'
-    },
-    exampleWords: [
-      { word: 'p\'p\'a', language: 'Amharic', languageCode: 'am', transcription: '/p\'p\'a/', meaning: 'Bishop', targetSoundIndex: 0 }
-    ],
-    audioSource: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4c/Bilabial_ejective_plosive.ogg/Bilabial_ejective_plosive.ogg.mp3',
-    relatedSymbols: ['p', 't\'', 'k\''],
-    commonConfusions: [],
-    difficulty: 'advanced',
-    lessonOrder: 47,
-    isCore: false
-  }
+  // NON-PULMONIC CONSONANTS: IMPLOSIVES, EJECTIVES & CLICKS
+  ["Voiced bilabial implosive","ɓ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/31/Voiced_bilabial_implosive.ogg/Voiced_bilabial_implosive.ogg.mp3"],
+  ["Voiced alveolar implosive","ɗ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Voiced_alveolar_implosive.ogg/Voiced_alveolar_implosive.ogg.mp3"],
+  ["Voiced retroflex implosive","ᶑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c8/Voiced-retroflex-implosive.ogg/Voiced-retroflex-implosive.ogg.mp3"],
+  ["Voiced palatal implosive","ʄ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2c/Voiced_palatal_implosive.ogg/Voiced_palatal_implosive.ogg.mp3"],
+  ["Voiced velar implosive","ɠ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a8/Voiced_velar_implosive.ogg/Voiced_velar_implosive.ogg.mp3"],
+  ["Voiced uvular implosive","ʛ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/00/Voiced_uvular_implosive.ogg/Voiced_uvular_implosive.ogg.mp3"],
+  ["Voiceless bilabial implosive","ɓ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Voiceless-bilabial-implosive.ogg/Voiceless-bilabial-implosive.ogg.mp3"],
+  ["Voiceless alveolar implosive","ɗ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f2/Voiceless-alveolar-implosive.ogg/Voiceless-alveolar-implosive.ogg.mp3"],
+  ["Voiceless retroflex implosive","ᶑ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d2/Voiceless-retroflex-implosive.ogg/Voiceless-retroflex-implosive.ogg.mp3"],
+  ["Voiceless palatal implosive","ʄ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fc/Voiceless_palatal_implosive.ogg/Voiceless_palatal_implosive.ogg.mp3"],
+  ["Voiceless velar implosive","ɠ̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cc/Voiceless-velar-implosive.ogg/Voiceless-velar-implosive.ogg.mp3"],
+  ["Voiceless uvular implosive","ʛ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/32/Voiceless-uvular-implosive.ogg/Voiceless-uvular-implosive.ogg.mp3"],
+  ["Bilabial ejective stop","pʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/64/Bilabial_ejective_plosive.ogg/Bilabial_ejective_plosive.ogg.mp3"],
+  ["Alveolar ejective stop","tʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d7/Alveolar_ejective_plosive.ogg/Alveolar_ejective_plosive.ogg.mp3"],
+  ["Retroflex ejective stop","ʈʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Retroflex_ejective.ogg/Retroflex_ejective.ogg.mp3"],
+  ["Palatal ejective stop","cʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0f/Palatal_ejective.ogg/Palatal_ejective.ogg.mp3"],
+  ["Velar ejective stop","kʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Velar_ejective_plosive.ogg/Velar_ejective_plosive.ogg.mp3"],
+  ["Uvular ejective stop","qʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/08/Uvular_ejective_plosive.ogg/Uvular_ejective_plosive.ogg.mp3"],
+  ["Labiodental ejective fricative","fʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/81/Labiodental_ejective_fricative.ogg/Labiodental_ejective_fricative.ogg.mp3"],
+  ["Alveolar ejective fricative","sʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7c/Alveolar_ejective_fricative.ogg/Alveolar_ejective_fricative.ogg.mp3"],
+  ["Retroflex ejective fricative","ʂʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Retroflex_ejective_fricative.ogg/Retroflex_ejective_fricative.ogg.mp3"],
+  ["Alveolo-palatal ejective fricative","ɕʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/Alveolo-palatal_ejective_fricative.ogg/Alveolo-palatal_ejective_fricative.ogg.mp3"],
+  ["Velar ejective fricative","xʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c6/Velar_ejective_fricative.ogg/Velar_ejective_fricative.ogg.mp3"],
+  ["Uvular ejective fricative","χʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/69/Uvular_ejective_fricative.ogg/Uvular_ejective_fricative.ogg.mp3"],
+  ["Bilabial ejective fricative","ɸʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Bilabial_ejective_fricative.ogg/Bilabial_ejective_fricative.ogg.mp3"],
+  ["Dental ejective fricative","θʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/22/Dental_ejective_fricative.ogg/Dental_ejective_fricative.ogg.mp3"],
+  ["Postalveolar ejective fricative","ʃʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Palato-alveolar_ejective_fricative.ogg/Palato-alveolar_ejective_fricative.ogg.mp3"],
+  ["Dental ejective affricate","t̪θʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cf/Dental_ejective_affricate.ogg/Dental_ejective_affricate.ogg.mp3"],
+  ["Alveolar ejective affricate","tsʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/45/Alveolar_ejective_affricate.ogg/Alveolar_ejective_affricate.ogg.mp3"],
+  ["Retroflex ejective affricate","ʈʂʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/09/Retroflex_ejective_affricate.ogg/Retroflex_ejective_affricate.ogg.mp3"],
+  ["Postalveolar ejective affricate","t̠ʃʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/91/Palato-alveolar_ejective_affricate.ogg/Palato-alveolar_ejective_affricate.ogg.mp3"],
+  ["Velar ejective affricate","kxʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bf/Velar_ejective_affricate.ogg/Velar_ejective_affricate.ogg.mp3"],
+  ["Uvular ejective affricate","qχʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5b/Uvular_ejective_affricate.ogg/Uvular_ejective_affricate.ogg.mp3"],
+  ["Alveolar lateral ejective fricative","ɬʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cf/Alveolar_lateral_ejective_fricative.ogg/Alveolar_lateral_ejective_fricative.ogg.mp3"],
+  ["Alveolar lateral ejective affricate","tɬʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/91/Alveolar_lateral_ejective_affricate.ogg/Alveolar_lateral_ejective_affricate.ogg.mp3"],
+  ["Palatal lateral ejective affricate","c𝼆ʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e0/Palatal_lateral_ejective_affricate.ogg/Palatal_lateral_ejective_affricate.ogg.mp3"],
+  ["Velar lateral ejective affricate","k𝼄ʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e2/Velar_lateral_ejective_affricate.ogg/Velar_lateral_ejective_affricate.ogg.mp3"],
+  ["Tenuis bilabial click","kʘ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2b/Clic_bilabial_sourd.ogg/Clic_bilabial_sourd.ogg.mp3"],
+  ["Tenuis dental click","kǀ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1f/Dental_click.ogg/Dental_click.ogg.mp3"],
+  ["Tenuis alveolar click","kǃ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/3c/Postalveolar_click.ogg/Postalveolar_click.ogg.mp3"],
+  ["Tenuis alveolar lateral click","kǁ","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f4/Alveolar_lateral_click.ogg/Alveolar_lateral_click.ogg.mp3"],
+  ["Tenuis retroflex click","k𝼊","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5a/Retrflx_click.wav/Retrflx_click.wav.mp3"],
+  ["Tenuis palatal click","kǂ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/89/Palatoalveolar_click.ogg/Palatoalveolar_click.ogg.mp3"]
 ];
+
+const VOWEL_CSV_DATA = [
+  ["Close front unrounded vowel","i","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/91/Close_front_unrounded_vowel.ogg/Close_front_unrounded_vowel.ogg.mp3"],
+  ["Close front rounded vowel","y","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ea/Close_front_rounded_vowel.ogg/Close_front_rounded_vowel.ogg.mp3"],
+  ["Close central unrounded vowel","ɨ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Close_central_unrounded_vowel.ogg/Close_central_unrounded_vowel.ogg.mp3"],
+  ["Close central rounded vowel","ʉ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/66/Close_central_rounded_vowel.ogg/Close_central_rounded_vowel.ogg.mp3"],
+  ["Close back unrounded vowel","ɯ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Close_back_unrounded_vowel.ogg/Close_back_unrounded_vowel.ogg.mp3"],
+  ["Close back rounded vowel","u","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5d/Close_back_rounded_vowel.ogg/Close_back_rounded_vowel.ogg.mp3"],
+  ["Near-close near-front unrounded vowel","ɪ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4c/Near-close_near-front_unrounded_vowel.ogg/Near-close_near-front_unrounded_vowel.ogg.mp3"],
+  ["Near-close near-front rounded vowel","ʏ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e3/Near-close_near-front_rounded_vowel.ogg/Near-close_near-front_rounded_vowel.ogg.mp3"],
+  ["Near-close near-back rounded vowel","ʊ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d5/Near-close_near-back_rounded_vowel.ogg/Near-close_near-back_rounded_vowel.ogg.mp3"],
+  ["Close-mid front unrounded vowel","e","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6c/Close-mid_front_unrounded_vowel.ogg/Close-mid_front_unrounded_vowel.ogg.mp3"],
+  ["Close-mid front rounded vowel","ø","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Close-mid_front_rounded_vowel.ogg/Close-mid_front_rounded_vowel.ogg.mp3"],
+  ["Close-mid central unrounded vowel","ɘ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/60/Close-mid_central_unrounded_vowel.ogg/Close-mid_central_unrounded_vowel.ogg.mp3"],
+  ["Close-mid central rounded vowel","ɵ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b5/Close-mid_central_rounded_vowel.ogg/Close-mid_central_rounded_vowel.ogg.mp3"],
+  ["Close-mid back unrounded vowel","ɤ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/26/Close-mid_back_unrounded_vowel.ogg/Close-mid_back_unrounded_vowel.ogg.mp3"],
+  ["Close-mid back rounded vowel","o","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/84/Close-mid_back_rounded_vowel.ogg/Close-mid_back_rounded_vowel.ogg.mp3"],
+  ["Mid front unrounded vowel","e̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e0/Mid_front_unrounded_vowel.ogg/Mid_front_unrounded_vowel.ogg.mp3"],
+  ["Mid front rounded vowel","ø̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ee/Mid_front_rounded_vowel.ogg/Mid_front_rounded_vowel.ogg.mp3"],
+  ["Mid central vowel","ə","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Mid-central_vowel.ogg/Mid-central_vowel.ogg.mp3"],
+  ["Mid back unrounded vowel","ɤ̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d8/%C9%A4%CC%9E_IPA_sound.opus/%C9%A4%CC%9E_IPA_sound.opus.mp3"],
+  ["Mid back rounded vowel","o̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a6/Mid_back_rounded_vowel.ogg/Mid_back_rounded_vowel.ogg.mp3"],
+  ["Open-mid front unrounded vowel","ɛ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/71/Open-mid_front_unrounded_vowel.ogg/Open-mid_front_unrounded_vowel.ogg.mp3"],
+  ["Open-mid front rounded vowel","œ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Open-mid_front_rounded_vowel_%282%29.ogg/Open-mid_front_rounded_vowel_%282%29.ogg.mp3"],
+  ["Open-mid central unrounded vowel","ɜ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/Open-mid_central_unrounded_vowel.ogg/Open-mid_central_unrounded_vowel.ogg.mp3"],
+  ["Open-mid central rounded vowel","ɞ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Open-mid_central_rounded_vowel.ogg/Open-mid_central_rounded_vowel.ogg.mp3"],
+  ["Open-mid back unrounded vowel","ʌ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/80/PR-open-mid_back_unrounded_vowel2.ogg/PR-open-mid_back_unrounded_vowel2.ogg.mp3"],
+  ["Open-mid back rounded vowel","ɔ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d0/PR-open-mid_back_rounded_vowel.ogg/PR-open-mid_back_rounded_vowel.ogg.mp3"],
+  ["Near-open front unrounded vowel","æ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c9/Near-open_front_unrounded_vowel.ogg/Near-open_front_unrounded_vowel.ogg.mp3"],
+  ["Near-open central vowel","ɐ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/22/Near-open_central_unrounded_vowel.ogg/Near-open_central_unrounded_vowel.ogg.mp3"],
+  ["Open front unrounded vowel","a","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0e/PR-open_front_unrounded_vowel.ogg/PR-open_front_unrounded_vowel.ogg.mp3"],
+  ["Open front rounded vowel","ɶ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c1/Open_front_rounded_vowel.ogg/Open_front_rounded_vowel.ogg.mp3"],
+  ["Open central unrounded vowel","ä","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/50/Open_central_unrounded_vowel.ogg/Open_central_unrounded_vowel.ogg.mp3"],
+  ["Open back unrounded vowel","ɑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e5/Open_back_unrounded_vowel.ogg/Open_back_unrounded_vowel.ogg.mp3"],
+  ["Open back rounded vowel","ɒ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/31/PR-open_back_rounded_vowel.ogg/PR-open_back_rounded_vowel.ogg.mp3"]
+];
+
+// Map canonical IDs for key phonemes referenced across UI
+const CANONICAL_ID_MAP: Record<string, string> = {
+  'p': 'p', 'b': 'b', 't': 't', 'd': 'd', 'k': 'k', 'ɡ': 'g', 'ʔ': 'glottal_stop',
+  'm': 'm', 'n': 'n', 'ŋ': 'ng', 'ɲ': 'ny',
+  'ts': 'affricate_ts', 'dz': 'affricate_dz', 't̠ʃ': 'affricate_tsh', 'd̠ʒ': 'affricate_dzh',
+  'f': 'f', 'v': 'v', 'θ': 'theta', 'ð': 'eth', 's': 's', 'z': 'z', 'ʃ': 'esh', 'ʒ': 'ezh', 'x': 'x', 'ɣ': 'gh', 'h': 'h',
+  'l': 'l', 'ɾ': 'r_tap', 'r': 'r_trill', 'j': 'j', 'w': 'w',
+  'i': 'i', 'y': 'y', 'e': 'e', 'ɛ': 'epsilon', 'æ': 'ash', 'a': 'a', 'ə': 'schwa', 'u': 'u', 'o': 'o', 'ɔ': 'open_o', 'ɑ': 'script_a', 'ɒ': 'turned_script_a',
+  'ʘ': 'click_bilabial', 'ǀ': 'click_dental', 'ɓ': 'implosive_voiced_bilabial', 'pʼ': 'ejective_p'
+};
+
+function helperInferPlace(name: string): PlaceOfArticulation | undefined {
+  const n = name.toLowerCase();
+  if (n.includes('bilabial')) return 'bilabial';
+  if (n.includes('labiodental')) return 'labiodental';
+  if (n.includes('dental')) return 'dental';
+  if (n.includes('postalveolar')) return 'postalveolar';
+  if (n.includes('alveolar')) return 'alveolar';
+  if (n.includes('retroflex')) return 'retroflex';
+  if (n.includes('palatal')) return 'palatal';
+  if (n.includes('velar')) return 'velar';
+  if (n.includes('uvular')) return 'uvular';
+  if (n.includes('pharyngeal')) return 'pharyngeal';
+  if (n.includes('glottal')) return 'glottal';
+  if (n.includes('epiglottal')) return 'epiglottal';
+  return undefined;
+}
+
+function helperInferManner(name: string): MannerOfArticulation | undefined {
+  const n = name.toLowerCase();
+  if (n.includes('affricate')) return 'affricate';
+  if (n.includes('plosive') || n.includes('stop')) return 'plosive';
+  if (n.includes('nasal')) return 'nasal';
+  if (n.includes('trill')) return 'trill';
+  if (n.includes('tap') || n.includes('flap')) return 'tap-flap';
+  if (n.includes('lateral fricative')) return 'lateral-fricative';
+  if (n.includes('fricative')) return 'fricative';
+  if (n.includes('lateral approximant')) return 'lateral-approximant';
+  if (n.includes('approximant')) return 'approximant';
+  return undefined;
+}
+
+function helperInferVoicing(name: string): Voicing | undefined {
+  const n = name.toLowerCase();
+  if (n.startsWith('voiced')) return 'voiced';
+  if (n.startsWith('voiceless')) return 'voiceless';
+  return undefined;
+}
+
+function helperInferVowelHeight(name: string): VowelHeight | undefined {
+  const n = name.toLowerCase();
+  if (n.includes('close-mid')) return 'close-mid';
+  if (n.includes('open-mid')) return 'open-mid';
+  if (n.includes('near-close')) return 'near-close';
+  if (n.includes('near-open')) return 'near-open';
+  if (n.includes('close')) return 'close';
+  if (n.includes('open')) return 'open';
+  if (n.includes('mid')) return 'mid';
+  return undefined;
+}
+
+function helperInferVowelBackness(name: string): VowelBackness | undefined {
+  const n = name.toLowerCase();
+  if (n.includes('near-front')) return 'near-front';
+  if (n.includes('near-back')) return 'near-back';
+  if (n.includes('front')) return 'front';
+  if (n.includes('central')) return 'central';
+  if (n.includes('back')) return 'back';
+  return undefined;
+}
+
+function helperInferRoundness(name: string): Roundness | undefined {
+  const n = name.toLowerCase();
+  if (n.includes('unrounded')) return 'unrounded';
+  if (n.includes('rounded')) return 'rounded';
+  return undefined;
+}
+
+const parsedConsonants: IPASymbol[] = CONSONANT_CSV_DATA.map((row, idx) => {
+  const [nameEnglish, symbol, audioUrl] = row;
+  const canonicalId = CANONICAL_ID_MAP[symbol] || `consonant_${idx}_${symbol.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  const isNonPulmonic = nameEnglish.toLowerCase().includes('click') || nameEnglish.toLowerCase().includes('implosive') || nameEnglish.toLowerCase().includes('ejective');
+
+  return {
+    id: canonicalId,
+    symbol,
+    unicode: `U+${symbol.codePointAt(0)?.toString(16).toUpperCase() || '0000'}`,
+    nameEnglish,
+    nameJapanese: nameEnglish,
+    nameHungarian: nameEnglish,
+    category: isNonPulmonic ? 'non-pulmonic' : 'pulmonic',
+    voicing: helperInferVoicing(nameEnglish),
+    placeOfArticulation: helperInferPlace(nameEnglish),
+    mannerOfArticulation: helperInferManner(nameEnglish),
+    description: { en: nameEnglish, ja: nameEnglish, hu: nameEnglish },
+    articulatoryGuide: {
+      en: `Articulatory position for ${nameEnglish}: place ${helperInferPlace(nameEnglish) || 'unspecified'}, manner ${helperInferManner(nameEnglish) || 'unspecified'}.`,
+      ja: `${nameEnglish} の発音。`,
+      hu: `${nameEnglish} képzése.`,
+    },
+    exampleWords: [],
+    audioSource: audioUrl || undefined,
+    audioAttribution: audioUrl ? {
+      source: 'Wikimedia Commons',
+      sourceUrl: audioUrl,
+      creator: 'Wikimedia Phonetics',
+      license: 'CC BY-SA 3.0 / 4.0',
+      attributionRequired: true,
+      commercialUseAllowed: true,
+      modificationAllowed: true,
+      redistributionAllowed: true,
+    } : undefined,
+    relatedSymbols: [],
+    commonConfusions: [],
+    difficulty: idx < 30 ? 'beginner' : idx < 80 ? 'intermediate' : 'advanced',
+    lessonOrder: idx + 1,
+    isCore: idx < 40,
+  };
+});
+
+const parsedVowels: IPASymbol[] = VOWEL_CSV_DATA.map((row, idx) => {
+  const [nameEnglish, symbol, audioUrl] = row;
+  const canonicalId = CANONICAL_ID_MAP[symbol] || `vowel_${idx}_${symbol.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  return {
+    id: canonicalId,
+    symbol,
+    unicode: `U+${symbol.codePointAt(0)?.toString(16).toUpperCase() || '0000'}`,
+    nameEnglish,
+    nameJapanese: nameEnglish,
+    nameHungarian: nameEnglish,
+    category: 'vowels',
+    vowelHeight: helperInferVowelHeight(nameEnglish),
+    vowelBackness: helperInferVowelBackness(nameEnglish),
+    roundness: helperInferRoundness(nameEnglish),
+    description: { en: nameEnglish, ja: nameEnglish, hu: nameEnglish },
+    articulatoryGuide: {
+      en: `Vowel position for ${nameEnglish}: height ${helperInferVowelHeight(nameEnglish) || 'unspecified'}, backness ${helperInferVowelBackness(nameEnglish) || 'unspecified'}, ${helperInferRoundness(nameEnglish) || 'unrounded'}.`,
+      ja: `${nameEnglish} の発音。`,
+      hu: `${nameEnglish} képzése.`,
+    },
+    exampleWords: [],
+    audioSource: audioUrl || undefined,
+    audioAttribution: audioUrl ? {
+      source: 'Wikimedia Commons',
+      sourceUrl: audioUrl,
+      creator: 'Wikimedia Phonetics',
+      license: 'CC BY-SA 3.0 / 4.0',
+      attributionRequired: true,
+      commercialUseAllowed: true,
+      modificationAllowed: true,
+      redistributionAllowed: true,
+    } : undefined,
+    relatedSymbols: [],
+    commonConfusions: [],
+    difficulty: 'intermediate',
+    lessonOrder: 200 + idx,
+    isCore: true,
+  };
+});
+
+// Deduplicate dataset by symbol/ID
+const rawAll = [...parsedConsonants, ...parsedVowels];
+const uniqueMap = new Map<string, IPASymbol>();
+
+for (const sym of rawAll) {
+  if (!uniqueMap.has(sym.id)) {
+    uniqueMap.set(sym.id, sym);
+  }
+}
+
+export const IPA_SYMBOLS: IPASymbol[] = Array.from(uniqueMap.values());

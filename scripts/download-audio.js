@@ -9,6 +9,14 @@ if (!fs.existsSync(PUBLIC_AUDIO_DIR)) {
   fs.mkdirSync(PUBLIC_AUDIO_DIR, { recursive: true });
 }
 
+// Remove 0-byte files
+fs.readdirSync(PUBLIC_AUDIO_DIR).forEach((file) => {
+  const filePath = path.join(PUBLIC_AUDIO_DIR, file);
+  if (fs.statSync(filePath).size === 0) {
+    fs.unlinkSync(filePath);
+  }
+});
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -44,18 +52,18 @@ function downloadFile(url, dest) {
 async function main() {
   console.log('Starting offline audio asset bundling check...');
 
-  // Parse TS data directly using regex to remain standalone in Node
   const tsContent = fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'ipaSymbols.ts'), 'utf-8');
 
-  const idMatches = [...tsContent.matchAll(/id:\s*'([^']+)'/g)].map(m => m[1]);
-  const audioMatches = [...tsContent.matchAll(/audioSource:\s*'([^']+)'/g)].map(m => m[1]);
+  // Regex to extract objects with id and audioSource
+  const objectRegex = /id:\s*['"]([^'"]+)['"][\s\S]*?audioSource:\s*['"]([^'"]+)['"]/g;
+  const matches = [...tsContent.matchAll(objectRegex)];
 
-  console.log(`Found ${audioMatches.length} audio sources defined in ipaSymbols.ts`);
+  console.log(`Found ${matches.length} symbol audio mappings in ipaSymbols.ts`);
 
   let downloadedCount = 0;
-  for (let i = 0; i < idMatches.length; i++) {
-    const id = idMatches[i];
-    const url = audioMatches[i];
+  for (const match of matches) {
+    const id = match[1];
+    const url = match[2];
 
     if (url && url.startsWith('http')) {
       const filename = `${id}.mp3`;
