@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Downloaded audio assets for offline bundling (generated dynamically in CI/CD)
+public/audio/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

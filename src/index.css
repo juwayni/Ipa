@@ -13,7 +13,12 @@
 
   /* High contrast accessibility mode adjustments */
   .high-contrast {
-    --tw-contrast-more: contrast(1.25);
+    filter: contrast(130%);
+  }
+
+  /* Dark mode root styles */
+  .dark {
+    color-scheme: dark;
   }
 
   /* Reduced motion */

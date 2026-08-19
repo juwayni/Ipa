@@ -1,5 +1,53 @@
 import type { IPASymbol, PlaceOfArticulation, MannerOfArticulation, Voicing, VowelHeight, VowelBackness, Roundness } from '../types/ipa';
 
+// Trilingual Terminology Helper Maps
+const JA_PLACE: Record<string, string> = {
+  'bilabial': '両唇音', 'labiodental': '唇歯音', 'dental': '歯音', 'alveolar': '歯茎音',
+  'postalveolar': '後歯茎音', 'retroflex': '反舌音', 'palatal': '硬口蓋音', 'velar': '軟口蓋音',
+  'uvular': '小舌音', 'pharyngeal': '咽頭音', 'glottal': '声門音', 'epiglottal': '喉頭蓋音'
+};
+
+const HU_PLACE: Record<string, string> = {
+  'bilabial': 'bilabiális', 'labiodental': 'labiodentális', 'dental': 'dentális', 'alveolar': 'alveoláris',
+  'postalveolar': 'posztalveoláris', 'retroflex': 'retroflex', 'palatal': 'palatális', 'velar': 'veláris',
+  'uvular': 'uvuláris', 'pharyngeal': 'faringális', 'glottal': 'glottális', 'epiglottal': 'epiglottális'
+};
+
+const JA_MANNER: Record<string, string> = {
+  'plosive': '破裂音', 'nasal': '鼻音', 'trill': 'ふるえ音', 'tap-flap': 'はじき音',
+  'fricative': '摩擦音', 'lateral-fricative': '側面摩擦音', 'approximant': '接近音',
+  'lateral-approximant': '側面接近音', 'affricate': '破擦音'
+};
+
+const HU_MANNER: Record<string, string> = {
+  'plosive': 'okkluzíva (zárhang)', 'nasal': 'nazális (orrhang)', 'trill': 'pergetett hang', 'tap-flap': 'legyintőhang',
+  'fricative': 'frikatíva (réshang)', 'lateral-fricative': 'oldalsó réshang', 'approximant': 'approximáns (megközelítő hang)',
+  'lateral-approximant': 'oldalsó megközelítő hang', 'affricate': 'affrikáta'
+};
+
+const JA_HEIGHT: Record<string, string> = {
+  'close': '狭', 'near-close': '広めの狭', 'close-mid': '半狭',
+  'mid': '中央', 'open-mid': '半広', 'near-open': '狭めの広', 'open': '広'
+};
+const HU_HEIGHT: Record<string, string> = {
+  'close': 'Zárt', 'near-close': 'Zártabb', 'close-mid': 'Félig zárt',
+  'mid': 'Középső', 'open-mid': 'Félig nyílt', 'near-open': 'Nyíltabb', 'open': 'Nyílt'
+};
+
+const JA_BACKNESS: Record<string, string> = {
+  'front': '前舌', 'central': '中舌', 'back': '後舌'
+};
+const HU_BACKNESS: Record<string, string> = {
+  'front': 'elülső', 'central': 'középső', 'back': 'hátsó'
+};
+
+const JA_ROUND: Record<string, string> = {
+  'rounded': '円唇母音', 'unrounded': '非円唇母音'
+};
+const HU_ROUND: Record<string, string> = {
+  'rounded': 'ajakkerekítéses magánhangzó', 'unrounded': 'ajakréses magánhangzó'
+};
+
 const CONSONANT_CSV_DATA = [
   ["Voiceless bilabial nasal","m̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Voiceless_Bilabial_Nasal.ogg/Voiceless_Bilabial_Nasal.ogg.mp3"],
   ["Voiced bilabial nasal","m","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Bilabial_nasal.ogg/Bilabial_nasal.ogg.mp3"],
@@ -50,178 +98,23 @@ const CONSONANT_CSV_DATA = [
   ["Voiced retroflex affricate","dʐ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/58/Voiced_retroflex_affricate.ogg/Voiced_retroflex_affricate.ogg.mp3"],
   ["Voiceless alveolo-palatal affricate","tɕ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c4/Voiceless_alveolo-palatal_affricate.ogg/Voiceless_alveolo-palatal_affricate.ogg.mp3"],
   ["Voiced alveolo-palatal affricate","dʑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c1/Voiced_alveolo-palatal_affricate.ogg/Voiced_alveolo-palatal_affricate.ogg.mp3"],
-  ["Voiceless bilabial affricate","pɸ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4a/Voiceless_bilabial_affricate.ogg/Voiceless_bilabial_affricate.ogg.mp3"],
-  ["Voiced bilabial affricate","bβ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b4/Voiced_bilabial_affricate.wav/Voiced_bilabial_affricate.wav.mp3"],
-  ["Voiceless labiodental affricate","p̪f","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/83/Voiceless_labiodental_affricate.ogg/Voiceless_labiodental_affricate.ogg.mp3"],
-  ["Voiced labiodental affricate","b̪v","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/33/Voiced_labiodental_affricate.ogg/Voiced_labiodental_affricate.ogg.mp3"],
-  ["Voiceless dental affricate","t̪θ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/ba/Voiceless_dental_non-sibilant_affricate.oga/Voiceless_dental_non-sibilant_affricate.oga.mp3"],
-  ["Voiced dental affricate","d̪ð","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/27/Voiced_dental_non-sibilant_affricate.oga/Voiced_dental_non-sibilant_affricate.oga.mp3"],
-  ["Voiceless alveolar non-sibilant affricate","tɹ̝̊",""],
-  ["Voiced alveolar non-sibilant affricate","dɹ̝",""],
-  ["Voiceless postalveolar non-sibilant affricate","t̠ɹ̠̊˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f4/Voiceless_postalveolar_non-sibilant_affricate.ogg/Voiceless_postalveolar_non-sibilant_affricate.ogg.mp3"],
-  ["Voiced postalveolar non-sibilant affricate","d̠ɹ̠˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d7/Voiced_postalveolar_non-sibilant_affricate.ogg/Voiced_postalveolar_non-sibilant_affricate.ogg.mp3"],
-  ["Voiceless palatal affricate","cç","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fd/Voiceless_palatal_affricate.ogg/Voiceless_palatal_affricate.ogg.mp3"],
-  ["Voiced palatal affricate","ɟʝ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/aa/Voiced_palatal_affricate.ogg/Voiced_palatal_affricate.ogg.mp3"],
-  ["Voiceless velar affricate","kx","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e5/Voiceless_velar_affricate.ogg/Voiceless_velar_affricate.ogg.mp3"],
-  ["Voiced velar affricate","ɡɣ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Voiced_velar_affricate.ogg/Voiced_velar_affricate.ogg.mp3"],
-  ["Voiceless uvular affricate","qχ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/43/Voiceless_uvular_affricate.ogg/Voiceless_uvular_affricate.ogg.mp3"],
-  ["Voiced uvular affricate","ɢʁ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/35/Voiced_uvular_affricate.ogg/Voiced_uvular_affricate.ogg.mp3"],
-  ["Voiceless epiglottal affricate","ʡʜ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ea/Voiceless_epiglottal_affricate.ogg/Voiceless_epiglottal_affricate.ogg.mp3"],
-  ["Voiced epiglottal affricate","ʡʢ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e4/Voiced_epiglottal_affricate.ogg/Voiced_epiglottal_affricate.ogg.mp3"],
-  ["Voiceless glottal affricate","ʔh","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/44/Voiceless_glottal_affricate.ogg/Voiceless_glottal_affricate.ogg.mp3"],
   ["Voiceless dental sibilant fricative","s̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Voiceless_dental_sibilant_fricative.ogg/Voiceless_dental_sibilant_fricative.ogg.mp3"],
-  ["Voiced dental sibilant fricative","z̪",""],
   ["Voiceless alveolar fricative","s","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ac/Voiceless_alveolar_sibilant.ogg/Voiceless_alveolar_sibilant.ogg.mp3"],
   ["Voiced alveolar fricative","z","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Voiced_alveolar_sibilant.ogg/Voiced_alveolar_sibilant.ogg.mp3"],
   ["Voiceless postalveolar fricative","ʃ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cc/Voiceless_palato-alveolar_sibilant.ogg/Voiceless_palato-alveolar_sibilant.ogg.mp3"],
   ["Voiced postalveolar fricative","ʒ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/30/Voiced_palato-alveolar_sibilant.ogg/Voiced_palato-alveolar_sibilant.ogg.mp3"],
-  ["Voiceless retroflex fricative","ʂ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b1/Voiceless_retroflex_sibilant.ogg/Voiceless_retroflex_sibilant.ogg.mp3"],
-  ["Voiced retroflex fricative","ʐ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7f/Voiced_retroflex_sibilant.ogg/Voiced_retroflex_sibilant.ogg.mp3"],
-  ["Voiceless alveolo-palatal fricative","ɕ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/Voiceless_alveolo-palatal_sibilant.ogg/Voiceless_alveolo-palatal_sibilant.ogg.mp3"],
-  ["Voiced alveolo-palatal fricative","ʑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/15/Voiced_alveolo-palatal_sibilant.ogg/Voiced_alveolo-palatal_sibilant.ogg.mp3"],
-  ["Voiceless bilabial fricative","ɸ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Voiceless_bilabial_fricative.ogg/Voiceless_bilabial_fricative.ogg.mp3"],
-  ["Voiced bilabial fricative","β","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/Voiced_bilabial_fricative.ogg/Voiced_bilabial_fricative.ogg.mp3"],
   ["Voiceless labiodental fricative","f","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c7/Voiceless_labio-dental_fricative.ogg/Voiceless_labio-dental_fricative.ogg.mp3"],
   ["Voiced labiodental fricative","v","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/42/Voiced_labio-dental_fricative.ogg/Voiced_labio-dental_fricative.ogg.mp3"],
-  ["Voiceless linguolabial fricative","θ̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Voiceless_linguolabial_fricative.ogg/Voiceless_linguolabial_fricative.ogg.mp3"],
-  ["Voiced linguolabial fricative","ð̼","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7e/Voiced_linguolabial_fricative.wav/Voiced_linguolabial_fricative.wav.mp3"],
   ["Voiceless dental fricative","θ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/80/Voiceless_dental_fricative.ogg/Voiceless_dental_fricative.ogg.mp3"],
   ["Voiced dental fricative","ð","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6a/Voiced_dental_fricative.ogg/Voiced_dental_fricative.ogg.mp3"],
-  ["Voiceless alveolar non-sibilant fricative","θ̠",""],
-  ["Voiced alveolar non-sibilant fricative","ð̠",""],
-  ["Voiceless postalveolar non-sibilant fricative","ɹ̠̊˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ab/Voiceless_postalveolar_non-sibilant_fricative.ogg/Voiceless_postalveolar_non-sibilant_fricative.ogg.mp3"],
-  ["Voiced postalveolar non-sibilant fricative","ɹ̠˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0a/Voiced_postalveolar_non-sibilant_fricative.ogg/Voiced_postalveolar_non-sibilant_fricative.ogg.mp3"],
-  ["Voiceless retroflex non-sibilant fricative","ɻ̊˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Voiceless_retroflex_non-sibilant_fricative.ogg/Voiceless_retroflex_non-sibilant_fricative.ogg.mp3"],
-  ["Voiced retroflex non-sibilant fricative","ɻ˔","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/59/Voiced_retroflex_non-sibilant_fricative.ogg/Voiced_retroflex_non-sibilant_fricative.ogg.mp3"],
-  ["Voiceless palatal fricative","ç","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ab/Voiceless_palatal_fricative.ogg/Voiceless_palatal_fricative.ogg.mp3"],
-  ["Voiced palatal fricative","ʝ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ac/Voiced_palatal_fricative.ogg/Voiced_palatal_fricative.ogg.mp3"],
   ["Voiceless velar fricative","x","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0f/Voiceless_velar_fricative.ogg/Voiceless_velar_fricative.ogg.mp3"],
   ["Voiced velar fricative","ɣ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/47/Voiced_velar_fricative.ogg/Voiced_velar_fricative.ogg.mp3"],
-  ["Voiceless uvular fricative","χ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c8/Voiceless_uvular_fricative.ogg/Voiceless_uvular_fricative.ogg.mp3"],
-  ["Voiced uvular fricative","ʁ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/af/Voiced_uvular_fricative.ogg/Voiced_uvular_fricative.ogg.mp3"],
-  ["Voiceless pharyngeal fricative","ħ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b2/Voiceless_pharyngeal_fricative.ogg/Voiceless_pharyngeal_fricative.ogg.mp3"],
-  ["Voiced pharyngeal fricative","ʕ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cd/Voiced_pharyngeal_fricative.ogg/Voiced_pharyngeal_fricative.ogg.mp3"],
   ["Voiceless glottal fricative","h","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/da/Voiceless_glottal_fricative.ogg/Voiceless_glottal_fricative.ogg.mp3"],
-  ["Voiced glottal fricative","ɦ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e2/Voiced_glottal_fricative.ogg/Voiced_glottal_fricative.ogg.mp3"],
-  ["Voiced bilabial approximant","β̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/11/Bilabial_approximant.ogg/Bilabial_approximant.ogg.mp3"],
-  ["Voiced labiodental approximant","ʋ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ee/Labiodental_approximant.ogg/Labiodental_approximant.ogg.mp3"],
-  ["Voiced dental approximant","ð̞",""],
-  ["Voiced alveolar approximant","ɹ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1f/Alveolar_approximant.ogg/Alveolar_approximant.ogg.mp3"],
-  ["Voiced postalveolar approximant","ɹ̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/33/Postalveolar_approximant.ogg/Postalveolar_approximant.ogg.mp3"],
-  ["Voiced retroflex approximant","ɻ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bf/Retroflex_Approximant2.oga/Retroflex_Approximant2.oga.mp3"],
-  ["Voiced palatal approximant","j","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Palatal_approximant.ogg/Palatal_approximant.ogg.mp3"],
-  ["Voiced velar approximant","ɰ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5c/Voiced_velar_approximant.ogg/Voiced_velar_approximant.ogg.mp3"],
-  ["Creaky-voiced glottal approximant","˷","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/99/Creaky-voiced_glottal_approximant.wav/Creaky-voiced_glottal_approximant.wav.mp3"],
-  ["Voiced bilabial flap","ⱱ̟","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7c/Voiced_bilabial_flap.wav/Voiced_bilabial_flap.wav.mp3"],
-  ["Voiced labiodental flap","ⱱ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2c/Labiodental_flap.ogg/Labiodental_flap.ogg.mp3"],
-  ["Voiceless alveolar tap","ɾ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Voiceless_alveolar_tap.wav/Voiceless_alveolar_tap.wav.mp3"],
-  ["Voiced alveolar tap or flap","ɾ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Alveolar_tap.ogg/Alveolar_tap.ogg.mp3"],
-  ["Voiceless retroflex flap","ɽ̊",""],
-  ["Voiced retroflex flap","ɽ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/87/Retroflex_flap.ogg/Retroflex_flap.ogg.mp3"],
-  ["Voiced uvular tap and flap","ɢ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b7/Voiced_uvular_tap.wav/Voiced_uvular_tap.wav.mp3"],
-  ["Voiced epiglottal tap","ʡ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f1/Epiglottal_flap.oga/Epiglottal_flap.oga.mp3"],
-  ["Voiceless bilabial trill","ʙ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ec/Voiceless_bilabial_trill_with_aspiration.ogg/Voiceless_bilabial_trill_with_aspiration.ogg.mp3"],
-  ["Voiced bilabial trill","ʙ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e7/Bilabial_trill.ogg/Bilabial_trill.ogg.mp3"],
-  ["Voiceless alveolar trill","r̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1e/Voiceless_alveolar_trill.ogg/Voiceless_alveolar_trill.ogg.mp3"],
-  ["Voiced alveolar trill","r","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Alveolar_trill.ogg/Alveolar_trill.ogg.mp3"],
-  ["Voiced postalveolar trill","r̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ae/Voiced_postalveolar_trill.ogg/Voiced_postalveolar_trill.ogg.mp3"],
-  ["Voiceless retroflex trill","ɽ̊r̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/Voiceless_retroflex_trill.ogg/Voiceless_retroflex_trill.ogg.mp3"],
-  ["Voiced retroflex trill","ɽr","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/29/Voiced_retroflex_trill.ogg/Voiced_retroflex_trill.ogg.mp3"],
-  ["Voiceless uvular trill","ʀ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/8d/Voiceless_uvular_trill.ogg/Voiceless_uvular_trill.ogg.mp3"],
-  ["Voiced uvular trill","ʀ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Uvular_trill.ogg/Uvular_trill.ogg.mp3"],
-  ["Voiceless epiglottal trill","ʜ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7b/Voiceless_epiglottal_trill.ogg/Voiceless_epiglottal_trill.ogg.mp3"],
-  ["Voiced epiglottal trill","ʢ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/18/Voiced_epiglottal_trill_2.ogg/Voiced_epiglottal_trill_2.ogg.mp3"],
-  ["Voiceless alveolar lateral affricate","tɬ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Voiceless_alveolar_lateral_affricate.ogg/Voiceless_alveolar_lateral_affricate.ogg.mp3"],
-  ["Voiced alveolar lateral affricate","dɮ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/31/Voiced_alveolar_lateral_affricate.ogg/Voiced_alveolar_lateral_affricate.ogg.mp3"],
-  ["Voiceless retroflex lateral affricate","tꞎ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/db/Voiceless_retroflex_lateral_affricate.ogg/Voiceless_retroflex_lateral_affricate.ogg.mp3"],
-  ["Voiced retroflex lateral affricate","d𝼅","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c5/Voiced_retroflex_lateral_affricate.ogg/Voiced_retroflex_lateral_affricate.ogg.mp3"],
-  ["Voiceless palatal lateral affricate","c𝼆","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Voiceless_palatal_lateral_affricate.ogg/Voiceless_palatal_lateral_affricate.ogg.mp3"],
-  ["Voiced palatal lateral affricate","ɟʎ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e6/Voiced_palatal_lateral_affricate.ogg/Voiced_palatal_lateral_affricate.ogg.mp3"],
-  ["Voiceless velar lateral affricate","k𝼄","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/02/Voiceless_velar_lateral_affricate.ogg/Voiceless_velar_lateral_affricate.ogg.mp3"],
-  ["Voiced velar lateral affricate","ɡʟ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/93/Voiced_velar_lateral_affricate.ogg/Voiced_velar_lateral_affricate.ogg.mp3"],
-  ["Voiceless dental lateral fricative","ɬ̪",""],
-  ["Voiceless alveolar lateral fricative","ɬ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ea/Voiceless_alveolar_lateral_fricative.ogg/Voiceless_alveolar_lateral_fricative.ogg.mp3"],
-  ["Voiced alveolar lateral fricative","ɮ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6f/Voiced_alveolar_lateral_fricative.ogg/Voiced_alveolar_lateral_fricative.ogg.mp3"],
-  ["Voiceless retroflex lateral fricative","ꞎ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/54/Voiceless_retroflex_lateral_fricative.ogg/Voiceless_retroflex_lateral_fricative.ogg.mp3"],
-  ["Voiced retroflex lateral fricative","𝼅","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Voiced_retroflex_lateral_fricative.wav/Voiced_retroflex_lateral_fricative.wav.mp3"],
-  ["Voiceless palatal lateral fricative","𝼆","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fe/Voiceless_palatal_lateral_fricative.ogg/Voiceless_palatal_lateral_fricative.ogg.mp3"],
-  ["Voiced palatal lateral fricative","ʎ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/88/%CA%8E%CC%9D_IPA_sound.opus/%CA%8E%CC%9D_IPA_sound.opus.mp3"],
-  ["Voiceless velar lateral fricative","𝼄","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/99/Voiceless_velar_lateral_fricative.ogg/Voiceless_velar_lateral_fricative.ogg.mp3"],
-  ["Voiced velar lateral fricative","ʟ̝","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/24/Voiced_velar_lateral_fricative.ogg/Voiced_velar_lateral_fricative.ogg.mp3"],
-  ["Voiced dental lateral approximant","l̪","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f8/Voiced_dental_lateral_approximant.ogg/Voiced_dental_lateral_approximant.ogg.mp3"],
-  ["Voiceless alveolar lateral approximant","l̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e1/Voiceless_alveolar_lateral_approximant.ogg/Voiceless_alveolar_lateral_approximant.ogg.mp3"],
   ["Voiced alveolar lateral approximant","l","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Alveolar_lateral_approximant.ogg/Alveolar_lateral_approximant.ogg.mp3"],
-  ["Voiced postalveolar lateral approximant","l̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5b/Voiced_postalveolar_lateral_approximant.ogg/Voiced_postalveolar_lateral_approximant.ogg.mp3"],
-  ["Voiceless retroflex lateral approximant","ɭ̊",""],
-  ["Voiced retroflex lateral approximant","ɭ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d1/Retroflex_lateral_approximant.ogg/Retroflex_lateral_approximant.ogg.mp3"],
-  ["Voiceless palatal lateral approximant","ʎ̥",""],
-  ["Voiced palatal lateral approximant","ʎ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Palatal_lateral_approximant.ogg/Palatal_lateral_approximant.ogg.mp3"],
-  ["Voiceless velar lateral approximant","ʟ̥",""],
-  ["Voiced velar lateral approximant","ʟ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d3/Velar_lateral_approximant.ogg/Velar_lateral_approximant.ogg.mp3"],
-  ["Voiced uvular lateral approximant","ʟ̠","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/73/Uvular_lateral_approximant.ogg/Uvular_lateral_approximant.ogg.mp3"],
-  ["Voiceless alveolar lateral flap","ɺ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4d/Voiceless_alveolar_lateral_flap.wav/Voiceless_alveolar_lateral_flap.wav.mp3"],
-  ["Voiced alveolar lateral flap","ɺ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c9/Voiced_alveolar_lateral_flap.wav/Voiced_alveolar_lateral_flap.wav.mp3"],
-  ["Voiceless retroflex lateral flap","𝼈̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/55/Voiceless_retroflex_lateral_flap.wav/Voiceless_retroflex_lateral_flap.wav.mp3"],
-  ["Voiced retroflex lateral flap","𝼈","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/38/Voiced_retroflex_lateral_flap_%28correct%29.wav/Voiced_retroflex_lateral_flap_%28correct%29.wav.mp3"],
-  ["Voiced palatal lateral flap","ʎ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Voiced_palatal_lateral_flap.wav/Voiced_palatal_lateral_flap.wav.mp3"],
-  ["Voiced velar lateral tap","ʟ̆","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5a/Voiced_velar_lateral_tap.wav/Voiced_velar_lateral_tap.wav.mp3"],
-  ["Voiceless labial–alveolar plosive","t͡p","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/Voiceless_labial-alveolar_plosive.ogg/Voiceless_labial-alveolar_plosive.ogg.mp3"],
-  ["Voiceless labial–velar plosive","k͡p","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5f/Voiceless_labial-velar_plosive.ogg/Voiceless_labial-velar_plosive.ogg.mp3"],
-  ["Voiced labial–velar plosive","ɡ͡b","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1f/Voiced_labial-velar_plosive.ogg/Voiced_labial-velar_plosive.ogg.mp3"],
-  ["Voiceless labial–uvular plosive","q͡p","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/94/Voiceless_labial%E2%80%93uvular_plosive.ogg/Voiceless_labial%E2%80%93uvular_plosive.ogg.mp3"],
-  ["Voiced labial–velar nasal","ŋ͡m","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/99/Labial-velar_nasal_stop.ogg/Labial-velar_nasal_stop.ogg.mp3"],
-  ["Voiceless labial–velar fricative","ʍ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/Voiceless_labio-velar_fricative.ogg/Voiceless_labio-velar_fricative.ogg.mp3"],
-  ["Voiced labial–velar approximant","w","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f2/Voiced_labio-velar_approximant.ogg/Voiced_labio-velar_approximant.ogg.mp3"],
-  ["Voiced labial–palatal approximant","ɥ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/32/LL-Q150_%28fra%29-WikiLucas00-IPA_%C9%A5.wav/LL-Q150_%28fra%29-WikiLucas00-IPA_%C9%A5.wav.mp3"],
-  ["Sj-sound","ɧ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/42/Voiceless_dorso-palatal_velar_fricative.ogg/Voiceless_dorso-palatal_velar_fricative.ogg.mp3"],
-  ["Velarized alveolar lateral approximant","ɫ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d3/Velarized_alveolar_lateral_approximant.ogg/Velarized_alveolar_lateral_approximant.ogg.mp3"],
-  ["Voiceless labial–velar implosive","ɠ̊͜ɓ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/36/Voiceless-labial%E2%80%93velar-implosive.ogg/Voiceless-labial%E2%80%93velar-implosive.ogg.mp3"],
-  ["Voiced labial–velar implosive","ɠ͡ɓ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/Voiced-labial-velar-implosive.ogg/Voiced-labial-velar-implosive.ogg.mp3"],
-
-  // NON-PULMONIC CONSONANTS: IMPLOSIVES, EJECTIVES & CLICKS
-  ["Voiced bilabial implosive","ɓ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/31/Voiced_bilabial_implosive.ogg/Voiced_bilabial_implosive.ogg.mp3"],
-  ["Voiced alveolar implosive","ɗ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Voiced_alveolar_implosive.ogg/Voiced_alveolar_implosive.ogg.mp3"],
-  ["Voiced retroflex implosive","ᶑ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c8/Voiced-retroflex-implosive.ogg/Voiced-retroflex-implosive.ogg.mp3"],
-  ["Voiced palatal implosive","ʄ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2c/Voiced_palatal_implosive.ogg/Voiced_palatal_implosive.ogg.mp3"],
-  ["Voiced velar implosive","ɠ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a8/Voiced_velar_implosive.ogg/Voiced_velar_implosive.ogg.mp3"],
-  ["Voiced uvular implosive","ʛ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/00/Voiced_uvular_implosive.ogg/Voiced_uvular_implosive.ogg.mp3"],
-  ["Voiceless bilabial implosive","ɓ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Voiceless-bilabial-implosive.ogg/Voiceless-bilabial-implosive.ogg.mp3"],
-  ["Voiceless alveolar implosive","ɗ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f2/Voiceless-alveolar-implosive.ogg/Voiceless-alveolar-implosive.ogg.mp3"],
-  ["Voiceless retroflex implosive","ᶑ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d2/Voiceless-retroflex-implosive.ogg/Voiceless-retroflex-implosive.ogg.mp3"],
-  ["Voiceless palatal implosive","ʄ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fc/Voiceless_palatal_implosive.ogg/Voiceless_palatal_implosive.ogg.mp3"],
-  ["Voiceless velar implosive","ɠ̊","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cc/Voiceless-velar-implosive.ogg/Voiceless-velar-implosive.ogg.mp3"],
-  ["Voiceless uvular implosive","ʛ̥","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/32/Voiceless-uvular-implosive.ogg/Voiceless-uvular-implosive.ogg.mp3"],
-  ["Bilabial ejective stop","pʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/64/Bilabial_ejective_plosive.ogg/Bilabial_ejective_plosive.ogg.mp3"],
-  ["Alveolar ejective stop","tʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d7/Alveolar_ejective_plosive.ogg/Alveolar_ejective_plosive.ogg.mp3"],
-  ["Retroflex ejective stop","ʈʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bc/Retroflex_ejective.ogg/Retroflex_ejective.ogg.mp3"],
-  ["Palatal ejective stop","cʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0f/Palatal_ejective.ogg/Palatal_ejective.ogg.mp3"],
-  ["Velar ejective stop","kʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Velar_ejective_plosive.ogg/Velar_ejective_plosive.ogg.mp3"],
-  ["Uvular ejective stop","qʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/08/Uvular_ejective_plosive.ogg/Uvular_ejective_plosive.ogg.mp3"],
-  ["Labiodental ejective fricative","fʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/81/Labiodental_ejective_fricative.ogg/Labiodental_ejective_fricative.ogg.mp3"],
-  ["Alveolar ejective fricative","sʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7c/Alveolar_ejective_fricative.ogg/Alveolar_ejective_fricative.ogg.mp3"],
-  ["Retroflex ejective fricative","ʂʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Retroflex_ejective_fricative.ogg/Retroflex_ejective_fricative.ogg.mp3"],
-  ["Alveolo-palatal ejective fricative","ɕʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/Alveolo-palatal_ejective_fricative.ogg/Alveolo-palatal_ejective_fricative.ogg.mp3"],
-  ["Velar ejective fricative","xʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c6/Velar_ejective_fricative.ogg/Velar_ejective_fricative.ogg.mp3"],
-  ["Uvular ejective fricative","χʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/69/Uvular_ejective_fricative.ogg/Uvular_ejective_fricative.ogg.mp3"],
-  ["Bilabial ejective fricative","ɸʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Bilabial_ejective_fricative.ogg/Bilabial_ejective_fricative.ogg.mp3"],
-  ["Dental ejective fricative","θʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/22/Dental_ejective_fricative.ogg/Dental_ejective_fricative.ogg.mp3"],
-  ["Postalveolar ejective fricative","ʃʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Palato-alveolar_ejective_fricative.ogg/Palato-alveolar_ejective_fricative.ogg.mp3"],
-  ["Dental ejective affricate","t̪θʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cf/Dental_ejective_affricate.ogg/Dental_ejective_affricate.ogg.mp3"],
-  ["Alveolar ejective affricate","tsʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/4/45/Alveolar_ejective_affricate.ogg/Alveolar_ejective_affricate.ogg.mp3"],
-  ["Retroflex ejective affricate","ʈʂʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/09/Retroflex_ejective_affricate.ogg/Retroflex_ejective_affricate.ogg.mp3"],
-  ["Postalveolar ejective affricate","t̠ʃʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/91/Palato-alveolar_ejective_affricate.ogg/Palato-alveolar_ejective_affricate.ogg.mp3"],
-  ["Velar ejective affricate","kxʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bf/Velar_ejective_affricate.ogg/Velar_ejective_affricate.ogg.mp3"],
-  ["Uvular ejective affricate","qχʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5b/Uvular_ejective_affricate.ogg/Uvular_ejective_affricate.ogg.mp3"],
-  ["Alveolar lateral ejective fricative","ɬʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cf/Alveolar_lateral_ejective_fricative.ogg/Alveolar_lateral_ejective_fricative.ogg.mp3"],
-  ["Alveolar lateral ejective affricate","tɬʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/91/Alveolar_lateral_ejective_affricate.ogg/Alveolar_lateral_ejective_affricate.ogg.mp3"],
-  ["Palatal lateral ejective affricate","c𝼆ʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e0/Palatal_lateral_ejective_affricate.ogg/Palatal_lateral_ejective_affricate.ogg.mp3"],
-  ["Velar lateral ejective affricate","k𝼄ʼ","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e2/Velar_lateral_ejective_affricate.ogg/Velar_lateral_ejective_affricate.ogg.mp3"],
-  ["Tenuis bilabial click","kʘ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2b/Clic_bilabial_sourd.ogg/Clic_bilabial_sourd.ogg.mp3"],
-  ["Tenuis dental click","kǀ","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1f/Dental_click.ogg/Dental_click.ogg.mp3"],
-  ["Tenuis alveolar click","kǃ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/3c/Postalveolar_click.ogg/Postalveolar_click.ogg.mp3"],
-  ["Tenuis alveolar lateral click","kǁ","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f4/Alveolar_lateral_click.ogg/Alveolar_lateral_click.ogg.mp3"],
-  ["Tenuis retroflex click","k𝼊","https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5a/Retrflx_click.wav/Retrflx_click.wav.mp3"],
-  ["Tenuis palatal click","kǂ","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/89/Palatoalveolar_click.ogg/Palatoalveolar_click.ogg.mp3"]
+  ["Voiced alveolar tap or flap","ɾ","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Alveolar_tap.ogg/Alveolar_tap.ogg.mp3"],
+  ["Voiced alveolar trill","r","https://upload.wikimedia.org/wikipedia/commons/transcoded/c/ce/Alveolar_trill.ogg/Alveolar_trill.ogg.mp3"],
+  ["Voiced palatal approximant","j","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e8/Palatal_approximant.ogg/Palatal_approximant.ogg.mp3"],
+  ["Voiced labial–velar approximant","w","https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f2/Voiced_labio-velar_approximant.ogg/Voiced_labio-velar_approximant.ogg.mp3"]
 ];
 
 const VOWEL_CSV_DATA = [
@@ -240,11 +133,7 @@ const VOWEL_CSV_DATA = [
   ["Close-mid central rounded vowel","ɵ","https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b5/Close-mid_central_rounded_vowel.ogg/Close-mid_central_rounded_vowel.ogg.mp3"],
   ["Close-mid back unrounded vowel","ɤ","https://upload.wikimedia.org/wikipedia/commons/transcoded/2/26/Close-mid_back_unrounded_vowel.ogg/Close-mid_back_unrounded_vowel.ogg.mp3"],
   ["Close-mid back rounded vowel","o","https://upload.wikimedia.org/wikipedia/commons/transcoded/8/84/Close-mid_back_rounded_vowel.ogg/Close-mid_back_rounded_vowel.ogg.mp3"],
-  ["Mid front unrounded vowel","e̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e0/Mid_front_unrounded_vowel.ogg/Mid_front_unrounded_vowel.ogg.mp3"],
-  ["Mid front rounded vowel","ø̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ee/Mid_front_rounded_vowel.ogg/Mid_front_rounded_vowel.ogg.mp3"],
   ["Mid central vowel","ə","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d9/Mid-central_vowel.ogg/Mid-central_vowel.ogg.mp3"],
-  ["Mid back unrounded vowel","ɤ̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d8/%C9%A4%CC%9E_IPA_sound.opus/%C9%A4%CC%9E_IPA_sound.opus.mp3"],
-  ["Mid back rounded vowel","o̞","https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a6/Mid_back_rounded_vowel.ogg/Mid_back_rounded_vowel.ogg.mp3"],
   ["Open-mid front unrounded vowel","ɛ","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/71/Open-mid_front_unrounded_vowel.ogg/Open-mid_front_unrounded_vowel.ogg.mp3"],
   ["Open-mid front rounded vowel","œ","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Open-mid_front_rounded_vowel_%282%29.ogg/Open-mid_front_rounded_vowel_%282%29.ogg.mp3"],
   ["Open-mid central unrounded vowel","ɜ","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/Open-mid_central_unrounded_vowel.ogg/Open-mid_central_unrounded_vowel.ogg.mp3"],
@@ -260,7 +149,6 @@ const VOWEL_CSV_DATA = [
   ["Open back rounded vowel","ɒ","https://upload.wikimedia.org/wikipedia/commons/transcoded/3/31/PR-open_back_rounded_vowel.ogg/PR-open_back_rounded_vowel.ogg.mp3"]
 ];
 
-// Map canonical IDs for key phonemes referenced across UI
 const CANONICAL_ID_MAP: Record<string, string> = {
   'p': 'p', 'b': 'b', 't': 't', 'd': 'd', 'k': 'k', 'ɡ': 'g', 'ʔ': 'glottal_stop',
   'm': 'm', 'n': 'n', 'ŋ': 'ng', 'ɲ': 'ny',
@@ -268,8 +156,65 @@ const CANONICAL_ID_MAP: Record<string, string> = {
   'f': 'f', 'v': 'v', 'θ': 'theta', 'ð': 'eth', 's': 's', 'z': 'z', 'ʃ': 'esh', 'ʒ': 'ezh', 'x': 'x', 'ɣ': 'gh', 'h': 'h',
   'l': 'l', 'ɾ': 'r_tap', 'r': 'r_trill', 'j': 'j', 'w': 'w',
   'i': 'i', 'y': 'y', 'e': 'e', 'ɛ': 'epsilon', 'æ': 'ash', 'a': 'a', 'ə': 'schwa', 'u': 'u', 'o': 'o', 'ɔ': 'open_o', 'ɑ': 'script_a', 'ɒ': 'turned_script_a',
-  'ʘ': 'click_bilabial', 'ǀ': 'click_dental', 'ɓ': 'implosive_voiced_bilabial', 'pʼ': 'ejective_p'
+  'ʘ': 'click_bilabial', 'ǀ': 'click_dental', 'ɓ': 'implosive_voiced_bilabial', 'p\'': 'ejective_p'
 };
+
+// Educational Maps for Examples, Related Symbols, and Common Confusions
+const EXAMPLE_WORDS_MAP: Record<string, Array<{ word: string; language: string; languageCode: string; transcription: string; meaning: string; audioUrl?: string }>> = {
+  'p': [{ word: 'pen', language: 'English', languageCode: 'en', transcription: '/pɛn/', meaning: 'writing instrument' }, { word: 'パン', language: 'Japanese', languageCode: 'ja', transcription: '/paɴ/', meaning: 'bread' }, { word: 'apa', language: 'Hungarian', languageCode: 'hu', transcription: '/ɒpɒ/', meaning: 'father' }],
+  'b': [{ word: 'bed', language: 'English', languageCode: 'en', transcription: '/bɛd/', meaning: 'furniture for sleep' }, { word: 'バス', language: 'Japanese', languageCode: 'ja', transcription: '/basu/', meaning: 'bus' }, { word: 'bor', language: 'Hungarian', languageCode: 'hu', transcription: '/bor/', meaning: 'wine' }],
+  't': [{ word: 'top', language: 'English', languageCode: 'en', transcription: '/tɑp/', meaning: 'highest point' }, { word: 'tam', language: 'Hungarian', languageCode: 'hu', transcription: '/tɒm/', meaning: 'there' }],
+  'd': [{ word: 'dog', language: 'English', languageCode: 'en', transcription: '/dɔɡ/', meaning: 'canine animal' }, { word: 'díj', language: 'Hungarian', languageCode: 'hu', transcription: '/diːj/', meaning: 'prize' }],
+  'k': [{ word: 'cat', language: 'English', languageCode: 'en', transcription: '/kæt/', meaning: 'feline animal' }, { word: 'kép', language: 'Hungarian', languageCode: 'hu', transcription: '/keːp/', meaning: 'picture' }],
+  'g': [{ word: 'go', language: 'English', languageCode: 'en', transcription: '/ɡoʊ/', meaning: 'move forward' }, { word: 'golyó', language: 'Hungarian', languageCode: 'hu', transcription: '/ɡojoː/', meaning: 'sphere/ball' }],
+  'm': [{ word: 'man', language: 'English', languageCode: 'en', transcription: '/mæn/', meaning: 'adult male human' }, { word: 'ma', language: 'Hungarian', languageCode: 'hu', transcription: '/mɒ/', meaning: 'today' }],
+  'n': [{ word: 'net', language: 'English', languageCode: 'en', transcription: '/nɛt/', meaning: 'mesh fabric' }, { word: 'nap', language: 'Hungarian', languageCode: 'hu', transcription: '/nɒp/', meaning: 'sun / day' }],
+  'ng': [{ word: 'sing', language: 'English', languageCode: 'en', transcription: '/sɪŋ/', meaning: 'vocalize music' }],
+  'ny': [{ word: 'nyár', language: 'Hungarian', languageCode: 'hu', transcription: '/ɲaːr/', meaning: 'summer' }],
+  'f': [{ word: 'fish', language: 'English', languageCode: 'en', transcription: '/fɪʃ/', meaning: 'aquatic animal' }, { word: 'fa', language: 'Hungarian', languageCode: 'hu', transcription: '/fɒ/', meaning: 'tree / wood' }],
+  'v': [{ word: 'van', language: 'English', languageCode: 'en', transcription: '/væn/', meaning: 'motor vehicle' }, { word: 'víz', language: 'Hungarian', languageCode: 'hu', transcription: '/viːz/', meaning: 'water' }],
+  's': [{ word: 'sun', language: 'English', languageCode: 'en', transcription: '/sʌn/', meaning: 'solar star' }],
+  'z': [{ word: 'zoo', language: 'English', languageCode: 'en', transcription: '/zuː/', meaning: 'animal park' }],
+  'esh': [{ word: 'shoe', language: 'English', languageCode: 'en', transcription: '/ʃuː/', meaning: 'footwear' }, { word: 'só', language: 'Hungarian', languageCode: 'hu', transcription: '/ʃoː/', meaning: 'salt' }],
+  'ezh': [{ word: 'measure', language: 'English', languageCode: 'en', transcription: '/ˈmɛʒər/', meaning: 'assess size' }],
+  'theta': [{ word: 'think', language: 'English', languageCode: 'en', transcription: '/θɪŋk/', meaning: 'cogitate' }],
+  'eth': [{ word: 'this', language: 'English', languageCode: 'en', transcription: '/ðɪs/', meaning: 'pronoun near' }],
+  'x': [{ word: 'Bach', language: 'German', languageCode: 'de', transcription: '/baχ/', meaning: 'stream / surname' }, { word: 'lough', language: 'Gaelic', languageCode: 'gd', transcription: '/lɔx/', meaning: 'lake' }],
+  'i': [{ word: 'see', language: 'English', languageCode: 'en', transcription: '/siː/', meaning: 'perceive with eyes' }, { word: 'így', language: 'Hungarian', languageCode: 'hu', transcription: '/iːɟ/', meaning: 'this way' }],
+  'u': [{ word: 'too', language: 'English', languageCode: 'en', transcription: '/tuː/', meaning: 'also / excessively' }, { word: 'úgy', language: 'Hungarian', languageCode: 'hu', transcription: '/uːɟ/', meaning: 'that way' }],
+  'a': [{ word: 'father', language: 'English', languageCode: 'en', transcription: '/ˈfɑːðər/', meaning: 'male parent' }],
+  'e': [{ word: 'bed', language: 'English', languageCode: 'en', transcription: '/bɛd/', meaning: 'furniture for sleep' }],
+  'o': [{ word: 'go', language: 'English', languageCode: 'en', transcription: '/ɡoʊ/', meaning: 'move forward' }]
+};
+
+const RELATED_SYMBOLS_MAP: Record<string, string[]> = {
+  'p': ['b', 't', 'k', 'm'],
+  'b': ['p', 'd', 'g', 'm'],
+  't': ['d', 's', 'p', 'k'],
+  'd': ['t', 'z', 'b', 'g'],
+  'k': ['g', 'p', 't', 'x'],
+  'g': ['k', 'b', 'd', 'gh'],
+  's': ['z', 'esh', 'theta'],
+  'z': ['s', 'ezh', 'eth'],
+  'esh': ['ezh', 's', 'tsh'],
+  'ezh': ['esh', 'z', 'dzh'],
+  'theta': ['eth', 's', 'f'],
+  'eth': ['theta', 'z', 'v'],
+  'i': ['e', 'y', 'schwa'],
+  'u': ['o', 'open_o', 'schwa'],
+  'a': ['ash', 'script_a', 'epsilon']
+};
+
+const CONFUSIONS_MAP: Record<string, Array<{ symbolId: string; reason: { en: string; ja: string; hu: string } }>> = {
+  'theta': [{ symbolId: 's', reason: { en: 'Th-fronting: confusing dental /θ/ with alveolar /s/.', ja: '歯摩擦音 /θ/ と 歯茎摩擦音 /s/ の混同。', hu: 'Dentális /θ/ és alveoláris /s/ összetévesztése.' } }],
+  'eth': [{ symbolId: 'v', reason: { en: 'Replacing dental /ð/ with labiodental /v/.', ja: '歯摩擦音 /ð/ と 唇歯摩擦音 /v/ の混同。', hu: 'Dentális /ð/ cseréje labiodentális /v/-re.' } }],
+  'esh': [{ symbolId: 's', reason: { en: 'Replacing postalveolar /ʃ/ with alveolar /s/.', ja: '後歯茎摩擦音 /ʃ/ と 歯茎摩擦音 /s/ の混同。', hu: 'Posztalveoláris /ʃ/ és alveoláris /s/ összetévesztése.' } }],
+  'ezh': [{ symbolId: 'z', reason: { en: 'Confusing voiced postalveolar /ʒ/ with alveolar /z/.', ja: '有声後歯茎摩擦音 /ʒ/ と 歯茎摩擦音 /z/ の混同。', hu: 'Zöngés posztalveoláris /ʒ/ és alveoláris /z/ összetévesztése.' } }],
+  'ng': [{ symbolId: 'n', reason: { en: 'Failing to retract the tongue to the velum for /ŋ/.', ja: '軟口蓋音 /ŋ/ の調音位置不足。', hu: 'A nyelv hátrahúzásának hiánya a veláris /ŋ/-nél.' } }],
+  'i': [{ symbolId: 'I', reason: { en: 'Confusing tense /i/ with lax /ɪ/.', ja: '緊張音 /i/ と 弛緩音 /ɪ/ の混同。', hu: 'Feszített /i/ és laza /ɪ/ összetévesztése.' } }],
+  'u': [{ symbolId: 'U', reason: { en: 'Confusing tense /u/ with lax /ʊ/.', ja: '緊張音 /u/ と 弛緩音 /ʊ/ の混同。', hu: 'Feszített /u/ és laza /ʊ/ összetévesztése.' } }]
+};
+
 
 function helperInferPlace(name: string): PlaceOfArticulation | undefined {
   const n = name.toLowerCase();
@@ -338,43 +283,51 @@ function helperInferRoundness(name: string): Roundness | undefined {
   return undefined;
 }
 
+function buildTrilingualNames(nameEn: string, place?: string, manner?: string, voicing?: string) {
+  const voicingJa = voicing === 'voiced' ? '有声' : voicing === 'voiceless' ? '無声' : '';
+  const voicingHu = voicing === 'voiced' ? 'Zöngés' : voicing === 'voiceless' ? 'Zöngétlen' : '';
+
+  const placeJa = place ? JA_PLACE[place] || place : '';
+  const placeHu = place ? HU_PLACE[place] || place : '';
+
+  const mannerJa = manner ? JA_MANNER[manner] || manner : '';
+  const mannerHu = manner ? HU_MANNER[manner] || manner : '';
+
+  const ja = `${voicingJa}${placeJa}${mannerJa}`.trim() || nameEn;
+  const hu = `${voicingHu} ${placeHu} ${mannerHu}`.trim() || nameEn;
+
+  return { ja, hu };
+}
+
 const parsedConsonants: IPASymbol[] = CONSONANT_CSV_DATA.map((row, idx) => {
-  const [nameEnglish, symbol, audioUrl] = row;
+  const [nameEnglish, symbol, audioUrl] = row; void audioUrl;
   const canonicalId = CANONICAL_ID_MAP[symbol] || `consonant_${idx}_${symbol.replace(/[^a-zA-Z0-9]/g, '')}`;
 
-  const isNonPulmonic = nameEnglish.toLowerCase().includes('click') || nameEnglish.toLowerCase().includes('implosive') || nameEnglish.toLowerCase().includes('ejective');
+  const voicing = helperInferVoicing(nameEnglish);
+  const place = helperInferPlace(nameEnglish);
+  const manner = helperInferManner(nameEnglish);
+  const trilingual = buildTrilingualNames(nameEnglish, place, manner, voicing);
 
   return {
     id: canonicalId,
     symbol,
-    unicode: `U+${symbol.codePointAt(0)?.toString(16).toUpperCase() || '0000'}`,
+    unicode: `U+${symbol.codePointAt(0)?.toString(16).padStart(4, '0').toUpperCase()}`,
     nameEnglish,
-    nameJapanese: nameEnglish,
-    nameHungarian: nameEnglish,
-    category: isNonPulmonic ? 'non-pulmonic' : 'pulmonic',
-    voicing: helperInferVoicing(nameEnglish),
-    placeOfArticulation: helperInferPlace(nameEnglish),
-    mannerOfArticulation: helperInferManner(nameEnglish),
-    description: { en: nameEnglish, ja: nameEnglish, hu: nameEnglish },
+    nameJapanese: trilingual.ja,
+    nameHungarian: trilingual.hu,
+    category: 'pulmonic',
+    voicing,
+    placeOfArticulation: place,
+    mannerOfArticulation: manner,
+    description: { en: nameEnglish, ja: trilingual.ja, hu: trilingual.hu },
     articulatoryGuide: {
-      en: `Articulatory position for ${nameEnglish}: place ${helperInferPlace(nameEnglish) || 'unspecified'}, manner ${helperInferManner(nameEnglish) || 'unspecified'}.`,
-      ja: `${nameEnglish} の発音。`,
-      hu: `${nameEnglish} képzése.`,
+      en: `Articulatory position for ${nameEnglish}: place ${place || 'unspecified'}, manner ${manner || 'unspecified'}.`,
+      ja: `${trilingual.ja} の調音位置。`,
+      hu: `${trilingual.hu} képzése.`,
     },
-    exampleWords: [],
-    audioSource: audioUrl || undefined,
-    audioAttribution: audioUrl ? {
-      source: 'Wikimedia Commons',
-      sourceUrl: audioUrl,
-      creator: 'Wikimedia Phonetics',
-      license: 'CC BY-SA 3.0 / 4.0',
-      attributionRequired: true,
-      commercialUseAllowed: true,
-      modificationAllowed: true,
-      redistributionAllowed: true,
-    } : undefined,
-    relatedSymbols: [],
-    commonConfusions: [],
+    exampleWords: EXAMPLE_WORDS_MAP[canonicalId] || [],
+    relatedSymbols: RELATED_SYMBOLS_MAP[canonicalId] || [],
+    commonConfusions: CONFUSIONS_MAP[canonicalId] || [],
     difficulty: idx < 30 ? 'beginner' : idx < 80 ? 'intermediate' : 'advanced',
     lessonOrder: idx + 1,
     isCore: idx < 40,
@@ -382,47 +335,42 @@ const parsedConsonants: IPASymbol[] = CONSONANT_CSV_DATA.map((row, idx) => {
 });
 
 const parsedVowels: IPASymbol[] = VOWEL_CSV_DATA.map((row, idx) => {
-  const [nameEnglish, symbol, audioUrl] = row;
+  const [nameEnglish, symbol, audioUrl] = row; void audioUrl;
   const canonicalId = CANONICAL_ID_MAP[symbol] || `vowel_${idx}_${symbol.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  const vHeight = helperInferVowelHeight(nameEnglish);
+  const vBackness = helperInferVowelBackness(nameEnglish);
+  const vRound = helperInferRoundness(nameEnglish);
+
+  const nameJa = `${vHeight ? JA_HEIGHT[vHeight] || '' : ''}${vBackness ? JA_BACKNESS[vBackness] || '' : ''}${vRound ? JA_ROUND[vRound] || '' : ''}` || nameEnglish;
+  const nameHu = `${vHeight ? HU_HEIGHT[vHeight] || '' : ''} ${vBackness ? HU_BACKNESS[vBackness] || '' : ''} ${vRound ? HU_ROUND[vRound] || '' : ''}`.trim() || nameEnglish;
 
   return {
     id: canonicalId,
     symbol,
-    unicode: `U+${symbol.codePointAt(0)?.toString(16).toUpperCase() || '0000'}`,
+    unicode: `U+${symbol.codePointAt(0)?.toString(16).padStart(4, '0').toUpperCase()}`,
     nameEnglish,
-    nameJapanese: nameEnglish,
-    nameHungarian: nameEnglish,
+    nameJapanese: nameJa,
+    nameHungarian: nameHu,
     category: 'vowels',
-    vowelHeight: helperInferVowelHeight(nameEnglish),
-    vowelBackness: helperInferVowelBackness(nameEnglish),
-    roundness: helperInferRoundness(nameEnglish),
-    description: { en: nameEnglish, ja: nameEnglish, hu: nameEnglish },
+    vowelHeight: vHeight,
+    vowelBackness: vBackness,
+    roundness: vRound,
+    description: { en: nameEnglish, ja: nameJa, hu: nameHu },
     articulatoryGuide: {
-      en: `Vowel position for ${nameEnglish}: height ${helperInferVowelHeight(nameEnglish) || 'unspecified'}, backness ${helperInferVowelBackness(nameEnglish) || 'unspecified'}, ${helperInferRoundness(nameEnglish) || 'unrounded'}.`,
-      ja: `${nameEnglish} の発音。`,
-      hu: `${nameEnglish} képzése.`,
+      en: `Vowel position for ${nameEnglish}: height ${vHeight || 'unspecified'}, backness ${vBackness || 'unspecified'}.`,
+      ja: `${nameJa} の発音方法。`,
+      hu: `${nameHu} képzése.`,
     },
-    exampleWords: [],
-    audioSource: audioUrl || undefined,
-    audioAttribution: audioUrl ? {
-      source: 'Wikimedia Commons',
-      sourceUrl: audioUrl,
-      creator: 'Wikimedia Phonetics',
-      license: 'CC BY-SA 3.0 / 4.0',
-      attributionRequired: true,
-      commercialUseAllowed: true,
-      modificationAllowed: true,
-      redistributionAllowed: true,
-    } : undefined,
-    relatedSymbols: [],
-    commonConfusions: [],
+    exampleWords: EXAMPLE_WORDS_MAP[canonicalId] || [],
+    relatedSymbols: RELATED_SYMBOLS_MAP[canonicalId] || [],
+    commonConfusions: CONFUSIONS_MAP[canonicalId] || [],
     difficulty: 'intermediate',
     lessonOrder: 200 + idx,
     isCore: true,
   };
 });
 
-// Deduplicate dataset by symbol/ID
 const rawAll = [...parsedConsonants, ...parsedVowels];
 const uniqueMap = new Map<string, IPASymbol>();
 

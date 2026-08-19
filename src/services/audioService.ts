@@ -16,23 +16,36 @@ class AudioService {
     // Stop currently playing audio
     this.stop();
 
-    // Try remote audio source first if available
+    const localAudioUrl = `/audio/${symbol.id}.mp3`;
+    const isOffline = typeof navigator !== 'undefined' && !navigator.onLine;
+
+    // If offline or as default fast local lookup, try local audio first
+    if (isOffline) {
+      try {
+        await this.playAudioUrl(localAudioUrl, speed, volume);
+        return;
+      } catch {
+        // Fallback to synthesis when offline if local audio file missing
+        this.synthesizeSymbolSound(symbol, speed, volume);
+        return;
+      }
+    }
+
+    // When online: try local audio first if available, then remote URL, then synthesis
+    try {
+      await this.playAudioUrl(localAudioUrl, speed, volume);
+      return;
+    } catch {
+      // Local audio file not cached or missing
+    }
+
     if (symbol.audioSource && symbol.audioSource.startsWith('http')) {
       try {
         await this.playAudioUrl(symbol.audioSource, speed, volume);
         return;
       } catch (err) {
-        console.warn(`Remote audio source failed for ${symbol.symbol}, trying local audio or fallback synthesis.`, err);
+        console.warn(`Remote audio source failed for ${symbol.symbol}, trying fallback synthesis.`, err);
       }
-    }
-
-    // Try local audio file
-    const localAudioUrl = `/audio/${symbol.id}.mp3`;
-    try {
-      await this.playAudioUrl(localAudioUrl, speed, volume);
-      return;
-    } catch {
-      // Local audio unavailable
     }
 
     // Fallback: Web Speech API or Web Audio Synth

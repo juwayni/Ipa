@@ -1,5 +1,7 @@
 import type { IPASymbol, UserSettings, UserProgress } from './types/ipa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { AdMob } from '@capacitor-community/admob';
 import { AppLayout } from './components/layout/AppLayout';
 import { HomeScreen } from './components/home/HomeScreen';
 import { IPAChart } from './components/chart/IPAChart';
@@ -16,6 +18,19 @@ export function App() {
   const [settings, setSettings] = useState<UserSettings>(() => storageService.getSettings());
   const [progress, setProgress] = useState<UserProgress>(() => storageService.getProgress());
   const [selectedSymbol, setSelectedSymbol] = useState<IPASymbol | null>(null);
+
+  useEffect(() => {
+    const initAdMob = async () => {
+      if (Capacitor.isNativePlatform()) {
+        try {
+          await AdMob.initialize({});
+        } catch (err) {
+          console.warn('AdMob initialize failed:', err);
+        }
+      }
+    };
+    initAdMob();
+  }, []);
 
   const handleSettingsChange = (newSettings: UserSettings) => {
     setSettings(newSettings);

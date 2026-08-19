@@ -9,7 +9,7 @@ if (!fs.existsSync(PUBLIC_AUDIO_DIR)) {
   fs.mkdirSync(PUBLIC_AUDIO_DIR, { recursive: true });
 }
 
-// Remove 0-byte files
+// Clean up 0-byte invalid files
 fs.readdirSync(PUBLIC_AUDIO_DIR).forEach((file) => {
   const filePath = path.join(PUBLIC_AUDIO_DIR, file);
   if (fs.statSync(filePath).size === 0) {
@@ -54,7 +54,7 @@ async function main() {
 
   const tsContent = fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'ipaSymbols.ts'), 'utf-8');
 
-  // Regex to extract objects with id and audioSource
+  // Extract objects with id and audioSource
   const objectRegex = /id:\s*['"]([^'"]+)['"][\s\S]*?audioSource:\s*['"]([^'"]+)['"]/g;
   const matches = [...tsContent.matchAll(objectRegex)];
 
@@ -78,14 +78,14 @@ async function main() {
         console.log(`Downloading audio for ${id} -> ${filename}`);
         await downloadFile(url, destPath);
         downloadedCount++;
-        await sleep(300);
+        await sleep(200);
       } catch (err) {
         console.warn(`Could not download audio for ${id}:`, err.message);
       }
     }
   }
 
-  console.log(`Prepared ${downloadedCount} audio files in ${PUBLIC_AUDIO_DIR}`);
+  console.log(`Successfully checked/prepared ${downloadedCount} audio files in ${PUBLIC_AUDIO_DIR}`);
 }
 
 main();

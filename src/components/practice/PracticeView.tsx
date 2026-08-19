@@ -49,9 +49,13 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
     if (mode === 'symbol-to-sound' || mode === 'four-choice') {
       promptText = `Which sound or description corresponds to symbol /${targetSymbol.symbol}/?`;
     } else if (mode === 'classification') {
-      promptText = `What is the classification of /${targetSymbol.symbol}/?`;
+      const classStr = targetSymbol.category === 'vowels'
+        ? `${targetSymbol.vowelHeight || ''} ${targetSymbol.vowelBackness || ''} vowel`
+        : `${targetSymbol.voicing || ''} ${targetSymbol.placeOfArticulation || ''} ${targetSymbol.mannerOfArticulation || ''}`;
+      promptText = `Select the symbol that matches classification: "${classStr.trim() || targetSymbol.nameEnglish}"`;
     } else if (mode === 'reverse-description') {
-      promptText = `Identify symbol for: "${targetSymbol.nameEnglish}"`;
+      const articulatoryGuide = targetSymbol.articulatoryGuide?.[settings.language] || targetSymbol.nameEnglish;
+      promptText = `Identify symbol for: "${articulatoryGuide}"`;
     } else {
       promptText = `Identify the target symbol /${targetSymbol.symbol}/:`;
     }
